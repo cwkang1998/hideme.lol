@@ -11,6 +11,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@pushprotocol/restapi": "^0.2.2",
     "@rainbow-me/rainbowkit": "^0.8.0",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^8.19.0",

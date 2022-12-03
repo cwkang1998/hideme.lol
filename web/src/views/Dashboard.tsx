@@ -9,11 +9,11 @@ import { HideMeProps, ProofData } from "../hideme-types";
 import { useGetAllStoredUserIpfs } from "../hooks/useGetAllStoredUserIpfs";
 import { readRowsFromIpfs } from "../utils/ipfs";
 import { exportProofJson } from "../utils/json-import-export";
-import SendPushNotification from "../utils/PushProtocol";
+// import SendPushNotification from "../utils/PushProtocol";
 
 type UserFormData = {
   rowData: {
-    row: string[];
+    keys: string[];
     values: string[];
   };
   id: string;
@@ -45,7 +45,10 @@ export const Dashboard = ({ wasmWorkerApi }: HideMeProps) => {
 
         const userFormData = data.saveIpfsCids.map((item, idx) => ({
           ...item,
-          rowData: ipfsRowData[idx],
+          rowData: {
+            keys: ipfsRowData[idx][0],
+            values: ipfsRowData[idx][1],
+          },
         }));
 
         setUserFormData(userFormData);
@@ -55,11 +58,12 @@ export const Dashboard = ({ wasmWorkerApi }: HideMeProps) => {
   }, [loading, data]);
 
   const onMultiSelectTableChange = (id: string) => {
-    return (vals: (string | number)[]) =>
-      setSelectedRows((prevVal) => ({
+    return (vals: (string | number)[]) => {
+      return setSelectedRows((prevVal) => ({
         ...prevVal,
         [id]: vals.map((val) => parseInt(String(val))),
       }));
+    };
   };
 
   const generateProof = async (
@@ -102,16 +106,22 @@ export const Dashboard = ({ wasmWorkerApi }: HideMeProps) => {
           const userFormDataDetails = userFormData.find(
             (userFormDataEle) => userFormDataEle.id === key
           );
+          
           const proofs = await Promise.all(
-            selectedRows[key].map(async (rowEle) => ({
-              selectedKey: userFormDataDetails!.rowData.row[rowEle],
-              selectedValue: userFormDataDetails!.rowData.values[rowEle],
-              proof: await generateProof(
-                userFormDataDetails!.rowData.row,
+            selectedRows[key].map(async (rowEle) => {
+              const proof = await generateProof(
+                userFormDataDetails!.rowData.keys,
                 userFormDataDetails!.rowData.values,
                 rowEle
-              ),
-            }))
+              );
+              console.log("elementForProof!", rowEle);
+              console.log("proof!", proof);
+              return {
+                selectedKey: userFormDataDetails!.rowData.keys[rowEle],
+                selectedValue: userFormDataDetails!.rowData.values[rowEle],
+                proof,
+              };
+            })
           );
           return {
             entityAddress: "0x00",
@@ -161,23 +171,34 @@ export const Dashboard = ({ wasmWorkerApi }: HideMeProps) => {
             <SectionTitle title="User Certificates" />
             <VStack marginTop={4}>
               {userFormData.length > 0 &&
-                userFormData.map((data) => (
-                  <CollapsibleCard
-                    address={data.user}
-                    date={new Date(data.blockTimestamp)}
-                    title={data.fileTypeString}
-                  >
-                    <MultiRowSelectTable
-                      onChange={onMultiSelectTableChange(data.id)}
-                      selectedRows={selectedRows[data.id]}
-                      rowTitles={data.rowData.row}
-                      rowValues={data.rowData.values}
-                    />
-                  </CollapsibleCard>
-                ))}
+                userFormData.map((data) => {
+                  const formDate = new Date(0);
+                  formDate.setUTCSeconds(parseInt(data.blockTimestamp));
+                  return (
+                    <CollapsibleCard
+                      address={data.user}
+                      date={formDate}
+                      title={data.fileTypeString}
+                    >
+                      <MultiRowSelectTable
+                        onChange={onMultiSelectTableChange(data.id)}
+                        selectedRows={
+                          selectedRows[data.id] &&
+                          selectedRows[data.id].map(String)
+                        }
+                        rowTitles={data.rowData.keys}
+                        rowValues={data.rowData.values}
+                      />
+                    </CollapsibleCard>
+                  );
+                })}
             </VStack>
             <Flex justifyContent="end" w="full">
-              <Button className="buttonBase" onClick={onGenerateProofClicked}>
+              <Button
+                className="buttonBase"
+                onClick={onGenerateProofClicked}
+                isLoading={isLoading}
+              >
                 generate proof
               </Button>
             </Flex>
@@ -185,12 +206,5 @@ export const Dashboard = ({ wasmWorkerApi }: HideMeProps) => {
         </div>
       </div>
     </Flex>
-    // <button
-    //   onClick={() =>
-    //     SendPushNotification("0x4bdB8234AD81F26985d257F36a2d2d8c30365546")
-    //   }
-    // >
-    //   Hola
-    // </button>
   );
 };

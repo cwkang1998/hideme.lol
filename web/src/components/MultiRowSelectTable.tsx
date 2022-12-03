@@ -36,18 +36,25 @@ export const MultiRowSelectTable = ({
               </Tr>
             </Thead>
             <Tbody>
-              {rowTitles.map((row, idx) => (
-                <Tr key={idx}>
-                  <Td>{row}</Td>
-                  <Td>{rowValues[idx]}</Td>
-                  <Td>
-                    <Checkbox
-                      value={`${idx}`}
-                      isChecked={selectedRows.includes(`${idx}`)}
-                    />
-                  </Td>
-                </Tr>
-              ))}
+              {rowTitles.map((row, idx) => {
+                if (row !== "-") {
+                  return (
+                    <Tr key={idx}>
+                      <Td>{row}</Td>
+                      <Td>{rowValues[idx]}</Td>
+                      <Td>
+                        <Checkbox
+                          value={`${idx}`}
+                          isChecked={
+                            selectedRows && selectedRows.includes(`${idx}`)
+                          }
+                        />
+                      </Td>
+                    </Tr>
+                  );
+                }
+                return undefined;
+              })}
             </Tbody>
           </Table>
         </CheckboxGroup>

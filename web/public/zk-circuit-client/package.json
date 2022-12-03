@@ -1,0 +1,12 @@
+{
+  "name": "zk-circuit",
+  "version": "0.1.0",
+  "files": [
+    "zk_circuit_bg.wasm",
+    "zk_circuit.js",
+    "zk_circuit.d.ts"
+  ],
+  "module": "zk_circuit.js",
+  "types": "zk_circuit.d.ts",
+  "sideEffects": false
+}

@@ -11,9 +11,9 @@ import { PropsWithChildren, ReactNode } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Links = [
-  { title: "Entity", href: "/entity" },
-  { title: "Dashboard", href: "/dashboard" },
-  { title: "Verifier", href: "Verifier" },
+  { title: "Entity", href: "entity" },
+  { title: "Dashboard", href: "dashboard" },
+  { title: "Verifier", href: "verifier" },
 ];
 
 type NavLinkType = {

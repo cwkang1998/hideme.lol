@@ -12,7 +12,7 @@ import {
   IconButton,
   Button,
 } from "@chakra-ui/react";
-import { DeleteIcon } from './DeleteIcon';
+import { DeleteIcon } from "./DeleteIcon";
 // import { RowData } from "../../file-hasher-types";
 import React from "react";
 
@@ -75,7 +75,11 @@ export const FlexibleFormTable = ({
               <Th className="text">Keys</Th>
               <Th className="text">Value</Th>
               <Th>
-                <Button className="buttonBase addButton" rightIcon={<AddIcon />} onClick={addEditableRow}>
+                <Button
+                  className="buttonBase addButton"
+                  rightIcon={<AddIcon />}
+                  onClick={addEditableRow}
+                >
                   Add row
                 </Button>
               </Th>

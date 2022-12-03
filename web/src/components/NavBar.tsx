@@ -3,21 +3,23 @@ import {
   Flex,
   HStack,
   Link,
-  IconButton,
   useDisclosure,
   useColorModeValue,
-  Stack,
-  Image
+  Image,
 } from "@chakra-ui/react";
-import { ReactNode, PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-const Links = [{ title: "Entity", href: "entity" }, { title: "Dashboard", href: "dashboard" }, { title: "Verifier", href: "verifier" }];
+const Links = [
+  { title: "Entity", href: "/entity" },
+  { title: "Dashboard", href: "/dashboard" },
+  { title: "Verifier", href: "Verifier" },
+];
 
 type NavLinkType = {
-  title: string,
-  href: string,
-}
+  title: string;
+  href: string;
+};
 const NavLink = ({ href, title }: NavLinkType) => (
   <Link
     px={2}
@@ -43,13 +45,14 @@ export const NavBar = ({children, page, setPage }: NavBarType) => {
 
   return (
     <>
-      <Box bg={useColorModeValue("primaryBlue", "primaryBlue")} className="navbar" px={4}>
+      <Box
+        bg={useColorModeValue("primaryBlue", "primaryBlue")}
+        className="navbar"
+        px={4}
+      >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <HStack spacing={8} alignItems={"center"}>
-            <Image
-              src="/assets/logo-white.svg"
-              width="140px"
-            />
+            <Image src="/assets/logo-white.svg" width="140px" />
             <HStack
               as={"nav"}
               spacing={4}
@@ -65,9 +68,7 @@ export const NavBar = ({children, page, setPage }: NavBarType) => {
           </Flex>
         </Flex>
       </Box>
-      <Flex className="bg-gradient">
-        {children}
-      </Flex>
+      <Flex className="bg-gradient">{children}</Flex>
     </>
   );
 };

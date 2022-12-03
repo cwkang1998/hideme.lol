@@ -1,6 +1,6 @@
 :root {
-  --text-gray: #504F4F;
-  --action-purple: #E620EA;
+  --text-gray: #504f4f;
+  --action-purple: #e620ea;
   --primaryDarkBlue: #020123;
 }
 
@@ -11,8 +11,7 @@ body {
     sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Inconsolata', serif!important;
-  
+  font-family: "Inconsolata", serif !important;
 }
 
 code {
@@ -21,23 +20,27 @@ code {
 }
 
 .bg-gradient {
-  background: rgb(2,0,22) !important;
-  background: linear-gradient(39deg, rgba(2,0,22,1) 0%, rgba(118,0,133,1) 63%, rgba(10,0,60,1) 100%)!important;
+  background: rgb(2, 0, 22) !important;
+  background: linear-gradient(
+    39deg,
+    rgba(2, 0, 22, 1) 0%,
+    rgba(118, 0, 133, 1) 63%,
+    rgba(10, 0, 60, 1) 100%
+  ) !important;
   height: 200vh;
 }
 .navbar {
   color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
-
 }
 .title {
   font-size: 42px;
-  font-family: 'Inconsolata', serif!important;
+  font-family: "Inconsolata", serif !important;
   margin: 6px 0;
   color: white;
 }
 .horizontalLine {
-  height: 3px; 
+  height: 3px;
   background-color: white;
   width: 100%;
 }
@@ -57,9 +60,9 @@ code {
   width: 100%;
 }
 .inputBox {
-  height: 50px!important;
-  background: white!important;
-  border-radius: 12px!important;
+  height: 50px !important;
+  background: white !important;
+  border-radius: 12px !important;
   color: var(--text-gray);
   padding: 8px 12px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -74,24 +77,23 @@ code {
   width: 550px;
 }
 .text {
-  font-family: 'Inconsolata', serif!important;
-  font-size: 18px!important;
-  color: white!important;
+  font-family: "Inconsolata", serif !important;
+  font-size: 18px !important;
+  color: white !important;
 }
 .buttonBase {
-
-  background-color: var(--action-purple)!important;
+  background-color: var(--action-purple) !important;
   color: black;
-  height: 31px!important;
-  font-size: 16px!important;
+  height: 31px !important;
+  font-size: 16px !important;
 }
 .heroSection {
   background-color: var(--primaryDarkBlue);
-  color: white!important;
+  color: white !important;
   display: flex;
   justify-content: center;
   width: 100%;
-  align-items: center;;
+  align-items: center;
 }
 .heroSectionInner {
   max-width: 1200px;

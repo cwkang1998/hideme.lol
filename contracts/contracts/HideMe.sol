@@ -13,13 +13,22 @@ contract HideMe is AccessControl {
     mapping(address => mapping(bytes32 => string)) public userCids;
 
     event CommittedFile(address indexed user, uint256 hash);
-    event SaveIpfsCid(address indexed user, bytes32 indexed fileType, string cid);
+    event SaveIpfsCid(
+        address indexed user,
+        bytes32 indexed fileType,
+        string cid,
+        string fileTypeString
+    );
 
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function commitFileHash(address user, uint256 hash) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function commitFileHash(
+        address user,
+        uint256 hash
+    ) external //onlyRole(DEFAULT_ADMIN_ROLE) 
+    {
         uint8 currentIndex = ringBufferIndexes[user];
         ringBufferIndexes[user] = (currentIndex + 1) % RING_BUFFER_SIZE;
 
@@ -28,9 +37,16 @@ contract HideMe is AccessControl {
         emit CommittedFile(user, hash);
     }
 
-    function storeUserCID(address user, bytes32 fileType, string memory cid) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function storeUserCID(
+        address user,
+        string memory cid,
+        string memory fileTypeString
+    ) external // onlyRole(DEFAULT_ADMIN_ROLE) 
+    {
+        bytes32 fileType = keccak256(abi.encode(fileTypeString));
+
         userCids[user][fileType] = cid;
 
-        emit SaveIpfsCid(user, fileType, cid);
+        emit SaveIpfsCid(user, fileType, cid, fileTypeString);
     }
 }

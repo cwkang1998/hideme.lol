@@ -14,9 +14,6 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - CommittedFile
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
         - SaveIpfsCid
       abis:
         - name: HideMe
@@ -24,12 +21,6 @@ dataSources:
       eventHandlers:
         - event: CommittedFile(indexed address,uint256)
           handler: handleCommittedFile
-        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-          handler: handleRoleAdminChanged
-        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleGranted
-        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleRevoked
-        - event: SaveIpfsCid(indexed address,indexed bytes32,string)
+        - event: SaveIpfsCid(indexed address,indexed bytes32,string,string)
           handler: handleSaveIpfsCid
       file: ./src/hide-me.ts

@@ -59,7 +59,9 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
           </Flex>
         </Flex>
       </Box>
-      <Flex className="bg-gradient">{children}</Flex>
+      <Flex className="bg-gradient">
+        {children}
+      </Flex>
     </>
   );
 };

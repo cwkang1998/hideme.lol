@@ -1,3 +1,9 @@
+:root {
+  --text-gray: #504F4F;
+  --action-purple: #E620EA;
+  --primaryDarkBlue: #020123;
+}
+
 body {
   margin: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -6,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Inconsolata', serif!important;
+  
 }
 
 code {
@@ -16,7 +23,7 @@ code {
 .bg-gradient {
   background: rgb(2,0,22) !important;
   background: linear-gradient(39deg, rgba(2,0,22,1) 0%, rgba(118,0,133,1) 63%, rgba(10,0,60,1) 100%)!important;
-  height: 100vh;
+  height: 200vh;
 }
 .navbar {
   color: white;
@@ -27,6 +34,7 @@ code {
   font-size: 42px;
   font-family: 'Inconsolata', serif!important;
   margin: 6px 0;
+  color: white;
 }
 .horizontalLine {
   height: 3px; 
@@ -36,4 +44,55 @@ code {
 .titleWrapper {
   margin: 6px 0;
   width: 100%;
+}
+.page-container {
+  max-width: 1200px;
+  padding: 100px 0;
+  width: 100%;
+}
+.page-container-outer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+.inputBox {
+  height: 50px!important;
+  background: white!important;
+  border-radius: 12px!important;
+  color: var(--text-gray);
+  padding: 8px 12px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin: 8px 0;
+}
+.inputTitle {
+  color: white;
+  font-size: 28px;
+  margin: 3px 0 8px;
+}
+.inputBoxCertTitle {
+  width: 550px;
+}
+.text {
+  font-family: 'Inconsolata', serif!important;
+  font-size: 18px!important;
+  color: white!important;
+}
+.buttonBase {
+
+  background-color: var(--action-purple)!important;
+  color: black;
+  height: 31px!important;
+  font-size: 16px!important;
+}
+.heroSection {
+  background-color: var(--primaryDarkBlue);
+  color: white!important;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;;
+}
+.heroSectionInner {
+  max-width: 1200px;
 }

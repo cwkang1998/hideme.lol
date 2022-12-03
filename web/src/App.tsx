@@ -69,13 +69,7 @@ const router = createBrowserRouter([
       {
         path: "verifier",
           element: <Verifier/>
-      }
-    ]
-  },
-  {
-    path: "/entity",
-    element: <Layout/>,
-    children: [
+      },
       {
         path: "entity",
         element: <Entity/>

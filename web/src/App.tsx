@@ -15,8 +15,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
 import { Dashboard } from "./views/Dashboard";
 import { Verifier } from "./views/Verifier";
-import { Layout } from "./components/Layout";
-import { Entity } from "./views/Entity";
+import { TabsView } from './views/TabsView';
 
 const { chains, provider } = configureChains(
   [
@@ -55,28 +54,6 @@ const Disclaimer: DisclaimerComponent = ({
     <Link href="https://disclaimer.xyz">Disclaimer</Link>
   </Text>
 );
-
-// Routing
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "verifier",
-        element: <Verifier />,
-      },
-      {
-        path: "entity",
-        element: <Entity />,
-      },
-    ],
-  },
-]);
 
 const App = () => {
   // Memoize worker and workerApi to prevent unneccessary rerenders
@@ -117,7 +94,8 @@ const App = () => {
             }}
             coolMode
           >
-            <RouterProvider router={router} />
+            {/* <RouterProvider router={router} /> */}
+            <TabsView />
           </RainbowKitProvider>
         </WagmiConfig>
       </ChakraProvider>

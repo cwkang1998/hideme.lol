@@ -98,3 +98,11 @@ code {
 .heroSectionInner {
   max-width: 1200px;
 }
+.navLinks--active {
+  text-decoration: underline;
+}
+.navLinks {
+  padding-right: 30px;
+  color: white;
+  cursor: pointer;
+}

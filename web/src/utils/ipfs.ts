@@ -21,6 +21,6 @@ export const submitFormToIpfs = async (key: string[], value: string[]) => {
 };
 
 export const readRowsFromIpfs = async (cid: String) => {
-  let res = await axios.get<{row: string[], values: string[]}>(`https://${cid}.ipfs.w3s.link/rows.json`);
+  let res = await axios.get<[string[], string[]]>(`https://${cid}.ipfs.w3s.link/rows.json`);
   return res.data;
 };

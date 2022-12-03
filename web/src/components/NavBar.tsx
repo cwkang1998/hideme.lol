@@ -35,12 +35,12 @@ const NavLink = ({ href, title }: NavLinkType) => (
 );
 
 type NavBarType = {
-  children: ReactNode,
-  page: string,
-  setPage: any
-}
+  children: ReactNode;
+  page: string;
+  setPage: any;
+};
 
-export const NavBar = ({children, page, setPage }: NavBarType) => {
+export const NavBar = ({ children, page, setPage }: NavBarType) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -59,7 +59,15 @@ export const NavBar = ({children, page, setPage }: NavBarType) => {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map(({ title, href }) => (
-                <Box key={title} onClick={() => setPage(href)} className={`navLinks ${page === href ? 'navLinks--active' : ''}`}>{title}</Box>
+                <Box
+                  key={title}
+                  onClick={() => setPage(href)}
+                  className={`navLinks ${
+                    page === href ? "navLinks--active" : ""
+                  }`}
+                >
+                  {title}
+                </Box>
               ))}
             </HStack>
           </HStack>

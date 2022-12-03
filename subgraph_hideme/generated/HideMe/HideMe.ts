@@ -134,6 +134,10 @@ export class SaveIpfsCid__Params {
   get cid(): string {
     return this._event.parameters[2].value.toString();
   }
+
+  get fileTypeString(): string {
+    return this._event.parameters[3].value.toString();
+  }
 }
 
 export class HideMe extends ethereum.SmartContract {
@@ -516,11 +520,11 @@ export class StoreUserCIDCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get fileType(): Bytes {
-    return this._call.inputValues[1].value.toBytes();
+  get cid(): string {
+    return this._call.inputValues[1].value.toString();
   }
 
-  get cid(): string {
+  get fileTypeString(): string {
     return this._call.inputValues[2].value.toString();
   }
 }

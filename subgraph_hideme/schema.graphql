@@ -12,6 +12,7 @@ type SaveIpfsCid @entity(immutable: true) {
   user: Bytes! # address
   fileType: Bytes! # bytes32
   cid: String! # string
+  fileTypeString: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

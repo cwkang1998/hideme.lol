@@ -1,15 +1,9 @@
 import {
   CommittedFile as CommittedFileEvent,
-  RoleAdminChanged as RoleAdminChangedEvent,
-  RoleGranted as RoleGrantedEvent,
-  RoleRevoked as RoleRevokedEvent,
   SaveIpfsCid as SaveIpfsCidEvent
 } from "../generated/HideMe/HideMe"
 import {
   CommittedFile,
-  RoleAdminChanged,
-  RoleGranted,
-  RoleRevoked,
   SaveIpfsCid
 } from "../generated/schema"
 
@@ -34,6 +28,7 @@ export function handleSaveIpfsCid(event: SaveIpfsCidEvent): void {
   entity.user = event.params.user
   entity.fileType = event.params.fileType
   entity.cid = event.params.cid
+  entity.fileTypeString = event.params.fileTypeString
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp

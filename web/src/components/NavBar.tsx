@@ -71,7 +71,7 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
         ) : null}
       </Box>
 
-      <Box p={4}>{children}</Box>
+      <Flex>{children}</Flex>
     </>
   );
 };

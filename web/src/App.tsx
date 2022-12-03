@@ -16,6 +16,7 @@ import { theme } from "./styles";
 import { Dashboard } from "./views/Dashboard";
 import { NavBar } from "./components/NavBar";
 import { Layout } from "./components/Layout";
+import { Entity } from './views/Entity';
 
 const { chains, provider } = configureChains(
   [
@@ -64,6 +65,16 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard/>
+      }
+    ]
+  },
+  {
+    path: "/entity",
+    element: <Layout/>,
+    children: [
+      {
+        path: "entity",
+        element: <Entity/>
       }
     ]
   }

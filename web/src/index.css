@@ -23,3 +23,17 @@ code {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
 
 }
+.title {
+  font-size: 42px;
+  font-family: 'Inconsolata', serif!important;
+  margin: 6px 0;
+}
+.horizontalLine {
+  height: 3px; 
+  background-color: white;
+  width: 100%;
+}
+.titleWrapper {
+  margin: 6px 0;
+  width: 100%;
+}

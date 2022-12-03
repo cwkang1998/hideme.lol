@@ -1,7 +1,9 @@
 type CommittedFile @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   user: Bytes! # address
+  fileType: Bytes! # bytes32
   hash: BigInt! # uint256
+  fileTypeString: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

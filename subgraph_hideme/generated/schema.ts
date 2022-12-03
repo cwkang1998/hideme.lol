@@ -8,13 +8,13 @@ import {
   store,
   Bytes,
   BigInt,
-  BigDecimal,
+  BigDecimal
 } from "@graphprotocol/graph-ts";
 
 export class CommittedFile extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -22,26 +22,24 @@ export class CommittedFile extends Entity {
     assert(id != null, "Cannot save CommittedFile entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type CommittedFile must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type CommittedFile must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("CommittedFile", id.toBytes().toHexString(), this);
+      store.set("CommittedFile", id.toString(), this);
     }
   }
 
-  static load(id: Bytes): CommittedFile | null {
-    return changetype<CommittedFile | null>(
-      store.get("CommittedFile", id.toHexString())
-    );
+  static load(id: string): CommittedFile | null {
+    return changetype<CommittedFile | null>(store.get("CommittedFile", id));
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get user(): Bytes {
@@ -53,6 +51,15 @@ export class CommittedFile extends Entity {
     this.set("user", Value.fromBytes(value));
   }
 
+  get fileType(): Bytes {
+    let value = this.get("fileType");
+    return value!.toBytes();
+  }
+
+  set fileType(value: Bytes) {
+    this.set("fileType", Value.fromBytes(value));
+  }
+
   get hash(): BigInt {
     let value = this.get("hash");
     return value!.toBigInt();
@@ -60,6 +67,15 @@ export class CommittedFile extends Entity {
 
   set hash(value: BigInt) {
     this.set("hash", Value.fromBigInt(value));
+  }
+
+  get fileTypeString(): string {
+    let value = this.get("fileTypeString");
+    return value!.toString();
+  }
+
+  set fileTypeString(value: string) {
+    this.set("fileTypeString", Value.fromString(value));
   }
 
   get blockNumber(): BigInt {

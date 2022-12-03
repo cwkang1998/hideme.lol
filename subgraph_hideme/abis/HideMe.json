@@ -14,13 +14,44 @@
         "type": "address"
       },
       {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "fileType",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hash",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "fileTypeString",
+        "type": "string"
+      }
+    ],
+    "name": "CommittedFile",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "hash",
         "type": "uint256"
       }
     ],
-    "name": "CommittedFile",
+    "name": "CommittedFileOld",
     "type": "event"
   },
   {
@@ -163,12 +194,35 @@
         "type": "address"
       },
       {
+        "internalType": "string",
+        "name": "fileTypeString",
+        "type": "string"
+      },
+      {
         "internalType": "uint256",
         "name": "hash",
         "type": "uint256"
       }
     ],
     "name": "commitFileHash",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "hash",
+        "type": "uint256"
+      }
+    ],
+    "name": "commitFileHashOld",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -374,6 +428,30 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "userFileHashes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

@@ -6,7 +6,7 @@ dataSources:
     name: HideMe
     network: mumbai
     source:
-      address: "0x0A3D817000C54011d5706A664b863eF324390168"
+      address: "0x29f54044dE334A69b84228eFf52986678612E280"
       abi: HideMe
       startBlock: 29463343
     mapping:
@@ -20,7 +20,7 @@ dataSources:
         - name: HideMe
           file: ./abis/HideMe.json
       eventHandlers:
-        - event: CommittedFile(indexed address,uint256)
+        - event: CommittedFile(indexed address,indexed bytes32,uint256,string)
           handler: handleCommittedFile
         - event: SaveIpfsCid(indexed address,indexed bytes32,string,string)
           handler: handleSaveIpfsCid

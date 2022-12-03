@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt,
+  BigInt
 } from "@graphprotocol/graph-ts";
 
 export class CommittedFile extends ethereum.Event {
@@ -20,6 +20,36 @@ export class CommittedFile__Params {
   _event: CommittedFile;
 
   constructor(event: CommittedFile) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get fileType(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get hash(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get fileTypeString(): string {
+    return this._event.parameters[3].value.toString();
+  }
+}
+
+export class CommittedFileOld extends ethereum.Event {
+  get params(): CommittedFileOld__Params {
+    return new CommittedFileOld__Params(this);
+  }
+}
+
+export class CommittedFileOld__Params {
+  _event: CommittedFileOld;
+
+  constructor(event: CommittedFileOld) {
     this._event = event;
   }
 
@@ -197,7 +227,7 @@ export class HideMe extends ethereum.SmartContract {
       "fileHashRingBuffers(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1),
+        ethereum.Value.fromUnsignedBigInt(param1)
       ]
     );
 
@@ -213,7 +243,7 @@ export class HideMe extends ethereum.SmartContract {
       "fileHashRingBuffers(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1),
+        ethereum.Value.fromUnsignedBigInt(param1)
       ]
     );
     if (result.reverted) {
@@ -225,7 +255,7 @@ export class HideMe extends ethereum.SmartContract {
 
   getRoleAdmin(role: Bytes): Bytes {
     let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
-      ethereum.Value.fromFixedBytes(role),
+      ethereum.Value.fromFixedBytes(role)
     ]);
 
     return result[0].toBytes();
@@ -247,7 +277,7 @@ export class HideMe extends ethereum.SmartContract {
   hasRole(role: Bytes, account: Address): boolean {
     let result = super.call("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account),
+      ethereum.Value.fromAddress(account)
     ]);
 
     return result[0].toBoolean();
@@ -256,7 +286,7 @@ export class HideMe extends ethereum.SmartContract {
   try_hasRole(role: Bytes, account: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account),
+      ethereum.Value.fromAddress(account)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -314,7 +344,7 @@ export class HideMe extends ethereum.SmartContract {
   userCids(param0: Address, param1: Bytes): string {
     let result = super.call("userCids", "userCids(address,bytes32):(string)", [
       ethereum.Value.fromAddress(param0),
-      ethereum.Value.fromFixedBytes(param1),
+      ethereum.Value.fromFixedBytes(param1)
     ]);
 
     return result[0].toString();
@@ -326,7 +356,7 @@ export class HideMe extends ethereum.SmartContract {
       "userCids(address,bytes32):(string)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromFixedBytes(param1),
+        ethereum.Value.fromFixedBytes(param1)
       ]
     );
     if (result.reverted) {
@@ -334,6 +364,38 @@ export class HideMe extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
+  userFileHashes(param0: Address, param1: Bytes): BigInt {
+    let result = super.call(
+      "userFileHashes",
+      "userFileHashes(address,bytes32):(uint256)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromFixedBytes(param1)
+      ]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_userFileHashes(
+    param0: Address,
+    param1: Bytes
+  ): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "userFileHashes",
+      "userFileHashes(address,bytes32):(uint256)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromFixedBytes(param1)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
 
@@ -384,8 +446,12 @@ export class CommitFileHashCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
+  get fileTypeString(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+
   get hash(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+    return this._call.inputValues[2].value.toBigInt();
   }
 }
 
@@ -393,6 +459,40 @@ export class CommitFileHashCall__Outputs {
   _call: CommitFileHashCall;
 
   constructor(call: CommitFileHashCall) {
+    this._call = call;
+  }
+}
+
+export class CommitFileHashOldCall extends ethereum.Call {
+  get inputs(): CommitFileHashOldCall__Inputs {
+    return new CommitFileHashOldCall__Inputs(this);
+  }
+
+  get outputs(): CommitFileHashOldCall__Outputs {
+    return new CommitFileHashOldCall__Outputs(this);
+  }
+}
+
+export class CommitFileHashOldCall__Inputs {
+  _call: CommitFileHashOldCall;
+
+  constructor(call: CommitFileHashOldCall) {
+    this._call = call;
+  }
+
+  get user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get hash(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class CommitFileHashOldCall__Outputs {
+  _call: CommitFileHashOldCall;
+
+  constructor(call: CommitFileHashOldCall) {
     this._call = call;
   }
 }

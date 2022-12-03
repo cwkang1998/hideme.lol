@@ -12,7 +12,7 @@ import {
 import { ReactNode, PropsWithChildren } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-const Links = [{ title: "Entity", href: "/entity" }, { title: "Dashboard", href: "/dashboard" }, { title: "Verifier", href: "Verifier" }];
+const Links = [{ title: "Entity", href: "entity" }, { title: "Dashboard", href: "dashboard" }, { title: "Verifier", href: "verifier" }];
 
 type NavLinkType = {
   title: string,
@@ -32,7 +32,13 @@ const NavLink = ({ href, title }: NavLinkType) => (
   </Link>
 );
 
-export const NavBar = ({children}: PropsWithChildren<{}>) => {
+type NavBarType = {
+  children: ReactNode,
+  page: string,
+  setPage: any
+}
+
+export const NavBar = ({children, page, setPage }: NavBarType) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -50,7 +56,7 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map(({ title, href }) => (
-                <NavLink key={title} title={title} href={href} />
+                <Box key={title} onClick={() => setPage(href)} className={`navLinks ${page === href ? 'navLinks--active' : ''}`}>{title}</Box>
               ))}
             </HStack>
           </HStack>

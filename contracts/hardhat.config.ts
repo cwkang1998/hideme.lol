@@ -22,7 +22,7 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     mumbai: {
-      url: process.env.MUMBAI_RPC_URL || "",
+      url: "https://morning-necessary-mountain.matic-testnet.discover.quiknode.pro/a136a46616ee8a00ce92bcd5efdfa041bc0a0759/",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     hardhat: {

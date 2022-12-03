@@ -8,7 +8,7 @@ type CommittedFile @entity(immutable: true) {
 }
 
 type SaveIpfsCid @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   user: Bytes! # address
   fileType: Bytes! # bytes32
   cid: String! # string

@@ -13,6 +13,7 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
 import { TabsView } from "./views/TabsView";
+import { Test } from "./components/Test";
 
 const { chains, provider } = configureChains(
   [
@@ -76,6 +77,7 @@ const App = () => {
 
   return (
     <>
+      <Test />
       <Helmet>
         <title>HIDEME.LOL</title>
       </Helmet>

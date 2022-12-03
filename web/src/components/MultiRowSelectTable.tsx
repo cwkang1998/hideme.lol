@@ -30,9 +30,9 @@ export const MultiRowSelectTable = ({
           <Table variant="simple" size="lg">
             <Thead>
               <Tr>
-                <Th>Keys</Th>
-                <Th>Value</Th>
-                <Th>Selection</Th>
+                <Th className="text">Keys</Th>
+                <Th className="text">Value</Th>
+                <Th className="text">Selection</Th>
               </Tr>
             </Thead>
             <Tbody>

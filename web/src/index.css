@@ -106,3 +106,10 @@ code {
   color: white;
   cursor: pointer;
 }
+.cardContainer {
+  background-color: var(--primaryDarkBlue) !important;
+  width: 100%;
+  padding: 30px 20px;
+  color: white!important;
+  margin: 8px 20px;
+}

@@ -28,29 +28,36 @@ export const Dashboard = () => {
           proof.
         </Text>
       </Hero>
-      <Flex direction="column" padding={8}>
-        <SectionTitle title="User Certificates" />
-        <VStack marginTop={4}>
-          <CollapsibleCard
-            address="0x123123123"
-            date={new Date()}
-            title="University"
-          >
-            <MultiRowSelectTable
-              onChange={(vals) => {
-                console.log(vals);
-                setSelectedRows(vals);
-              }}
-              selectedRows={selectedRows}
-              rowTitles={["123", "234", "345"]}
-              rowValues={["s1", "s3", "s66"]}
-            />
-          </CollapsibleCard>
-        </VStack>
-        <Flex justifyContent="end" w="full">
-          <Button>generate proof</Button>
-        </Flex>
-      </Flex>
+
+
+      <div className="page-container-outer">
+        <div className="page-container">
+          <Flex direction="column" padding={8}>
+            <SectionTitle title="User Certificates" />
+            <VStack marginTop={4}>
+              <CollapsibleCard
+                address="0x123123123"
+                date={new Date()}
+                title="University"
+              >
+                <MultiRowSelectTable
+                  onChange={(vals) => {
+                    console.log(vals);
+                    setSelectedRows(vals);
+                  }}
+                  selectedRows={selectedRows}
+                  rowTitles={["123", "234", "345"]}
+                  rowValues={["s1", "s3", "s66"]}
+                />
+              </CollapsibleCard>
+            </VStack>
+            <Flex justifyContent="end" w="full">
+              <Button className="buttonBase">generate proof</Button>
+            </Flex>
+          </Flex>
+        </div>
+      </div>
+
     </Flex>
     // <button
     //   onClick={() =>

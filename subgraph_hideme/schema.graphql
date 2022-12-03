@@ -1,0 +1,18 @@
+type CommittedFile @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  hash: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SaveIpfsCid @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  fileType: Bytes! # bytes32
+  cid: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

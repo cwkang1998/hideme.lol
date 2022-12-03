@@ -1,0 +1,35 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: HideMe
+    network: goerli
+    source:
+      address: "0x5261ad65cec0708D0E485507C12F8aEA7218763f"
+      abi: HideMe
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CommittedFile
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - SaveIpfsCid
+      abis:
+        - name: HideMe
+          file: ./abis/HideMe.json
+      eventHandlers:
+        - event: CommittedFile(indexed address,uint256)
+          handler: handleCommittedFile
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: SaveIpfsCid(indexed address,indexed bytes32,string)
+          handler: handleSaveIpfsCid
+      file: ./src/hide-me.ts

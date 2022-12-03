@@ -7,25 +7,28 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Image
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { PropsWithChildren } from "react";
+import { ReactNode, PropsWithChildren } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-const Links = ["Entity", "Dashboard", "Verifier"];
+const Links = [{ title: "Entity", href: "/entity" }, { title: "Dashboard", href: "/dashboard" }, { title: "Verifier", href: "Verifier" }];
 
-const NavLink = ({ children }: PropsWithChildren<{}>) => (
+type NavLinkType = {
+  title: string,
+  href: string,
+}
+const NavLink = ({ href, title }: NavLinkType) => (
   <Link
     px={2}
     py={1}
     rounded={"md"}
     _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
+      textDecoration: "underline",
     }}
-    href={"#"}
+    href={href}
   >
-    {children}
+    {title}
   </Link>
 );
 
@@ -34,24 +37,20 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg={useColorModeValue("primaryBlue", "primaryBlue")} className="navbar" px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <IconButton
-            size={"md"}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={"Open Menu"}
-            display={{ md: "none" }}
-            onClick={isOpen ? onClose : onOpen}
-          />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Logo</Box>
+            <Image
+              src="/assets/logo-white.svg"
+              width="140px"
+            />
             <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map(({ title, href }) => (
+                <NavLink key={title} title={title} href={href} />
               ))}
             </HStack>
           </HStack>
@@ -59,19 +58,10 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
             <ConnectButton />
           </Flex>
         </Flex>
-
-        {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
       </Box>
-
-      <Flex>{children}</Flex>
+      <Flex className="bg-gradient">
+        {children}
+      </Flex>
     </>
   );
 };

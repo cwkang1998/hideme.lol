@@ -12,19 +12,21 @@ export const Hero = ({
   imageUrl: string;
 }>) => {
   return (
-    <Box w="100%" p={16}>
-      <Heading size="lg" mb={4}>
-        {title}
-      </Heading>
-      <Flex justifyContent="space-between">
-        <Box>
-          <Heading size="md" mb={4}>
-            {subtitle}
-          </Heading>
-          <Box pr={8}>{children}</Box>
-        </Box>
-        <Image src={imageUrl} />
-      </Flex>
+    <Box w="100%" p={16} className="heroSection">
+      <div className="heroSectionInner">
+        <Heading size="lg" mb={4}>
+          {title}
+        </Heading>
+        <Flex justifyContent="space-between">
+          <Box>
+            <Heading size="md" mb={4}>
+              {subtitle}
+            </Heading>
+            <Box pr={8}>{children}</Box>
+          </Box>
+          <Image src={imageUrl} />
+        </Flex>
+      </div>
     </Box>
   );
 };

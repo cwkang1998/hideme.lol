@@ -4,8 +4,8 @@ import { SectionTitle } from "../components/SectionTitle";
 
 export const Verifier = () => {
   return (
-    <Flex direction="column">
-      <Hero title="User Dashboard" subtitle="How it works" imageUrl="/250.png">
+    <Flex direction="column" style={{ width: '100%' }}>
+      <Hero title="User Dashboard" subtitle="How it works" imageUrl="/assets/dashboard.png">
         <Text textAlign="justify">
           This is the place for uploading your certificates and generating
           proofs.

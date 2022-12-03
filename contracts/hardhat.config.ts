@@ -18,14 +18,12 @@ const config: HardhatUserConfig = {
   },
   networks: {
     goerli: {
-      url: process.env.GOERLI_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      url: process.env.GOERLI_RPC_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     mumbai: {
-      url: process.env.MUMBAI_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      url: process.env.MUMBAI_RPC_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     hardhat: {
       accounts: {
@@ -35,8 +33,11 @@ const config: HardhatUserConfig = {
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-  },
+    apiKey: {
+        goerli: process.env.ETHERSCAN_API_KEY!,
+        polygonMumbai: process.env.POLYGONSCAN_API_KEY!,
+    }
+  }
 };
 
 export default config;

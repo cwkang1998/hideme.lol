@@ -18,7 +18,7 @@ Protocols nowadays allow us to proof that data is correct by revealing nothing a
 
 - Owners of the data can choose only the information that they want to reveal, and generate a proof that the submitted information is part of the actual content **``(Privacy preserving)``**
 
-- The verifier receives a proof and public input, performs a verification that the actual passed data matches the commited value stored on the blockchain **``(Secure)``**
+- The verifier receives a proof and public input, performs a verification that the actual passed data matches the commited value stored on the blockchain **``(Secure & Trustworthy)``**
 
 - Allow any party to have access to this technology, by letting the underlying zkp to be generic and flexible enough. **``(infrastructure)``**
 

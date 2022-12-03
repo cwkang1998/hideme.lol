@@ -14,7 +14,6 @@ export const submnitFormToIpfs = async (key: string[], value: string[]) => {
   console.log("debugging : ", rows);
 
   const files = [
-    new File(["contents-of-file-1"], "plain-utf8.txt"),
     new File([blob], "rows.json"),
   ];
   const cid = await storage.put(files);
@@ -22,7 +21,6 @@ export const submnitFormToIpfs = async (key: string[], value: string[]) => {
 };
 
 export const readRowsFromIpfs = async (cid: String) => {
-  let res = await axios.get(`https://${cid}.ipfs.w3s.link/rows.json`);
+  let res = await axios.get<{row: string[], values: string[]}>(`https://${cid}.ipfs.w3s.link/rows.json`);
   return res.data;
-  //res.dat = [rows:Array, values:Array]
 };

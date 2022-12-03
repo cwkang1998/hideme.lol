@@ -14,11 +14,25 @@ const GET_STORED_USER_IPFS = gql`
       id
       user
       fileType
+      fileTypeString
       cid
       blockTimestamp
     }
   }
 `;
+
+type SaveIpfsCidsResponse = {
+  saveIpfsCids: Array<SaveIpfsCidsResponseItem>;
+};
+
+type SaveIpfsCidsResponseItem = {
+  id: string;
+  user: string;
+  fileType: string;
+  fileTypeString: string;
+  cid: string;
+  blockTimestamp: string;
+};
 
 export const useGetStoredUserIpfs = (
   networkName: string,
@@ -27,7 +41,7 @@ export const useGetStoredUserIpfs = (
 ) => {
   const client = useCustomApolloClient(networkName);
 
-  const { loading, error, data, startPolling, stopPolling } = useQuery(
+  const { loading, error, data, startPolling, stopPolling } = useQuery<SaveIpfsCidsResponse>(
     GET_STORED_USER_IPFS,
     {
       variables: { count, user },

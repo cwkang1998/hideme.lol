@@ -63,7 +63,6 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
           submitRowValues
         );
 
-        debugger;
         setLoadingMessage("Submitting commitment...");
         console.log(commitment);
 

@@ -1,14 +1,55 @@
 import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import { CollapsibleCard } from "../components/cards/CollapsibleCard";
 import { FlexibleFormTable } from "../components/FlexibleFormTable";
 import { Hero } from "../components/Hero";
 import { MultiRowSelectTable } from "../components/MultiRowSelectTable";
 import { SectionTitle } from "../components/SectionTitle";
+import { useGetAllStoredUserIpfs } from "../hooks/useGetAllStoredUserIpfs";
+import { readRowsFromIpfs } from "../utils/ipfs";
 import SendPushNotification from "../utils/PushProtocol";
 
 export const Dashboard = () => {
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>(["0"]);
+  const [userFormData, setUserFormData] = useState<
+    {
+      rowData: {
+        row: string[];
+        values: string[];
+      };
+      id: string;
+      user: string;
+      fileType: string;
+      fileTypeString: string;
+      cid: string;
+      blockTimestamp: string;
+    }[]
+  >([]);
+
+  const userAddress = "0x5261ad65cec0708D0E485507C12F8aEA7218763f";
+
+  const { address } = useAccount();
+
+  const { data, loading } = useGetAllStoredUserIpfs(100, address!);
+
+  useEffect(() => {
+    const asyncFn = async () => {
+      if (!loading && data) {
+        const ipfsRowData = await Promise.all(
+          data.saveIpfsCids.map((item) => readRowsFromIpfs(item.cid))
+        );
+
+        const userFormData = data.saveIpfsCids.map((item, idx) => ({
+          ...item,
+          rowData: ipfsRowData[idx],
+        }));
+
+        setUserFormData(userFormData);
+      }
+    };
+    asyncFn();
+  }, [loading, data]);
 
   return (
     <Flex direction="column" w="full">
@@ -33,7 +74,7 @@ export const Dashboard = () => {
         <div className="page-container">
           <Flex direction="column" padding={8}>
             <SectionTitle title="User Certificates" />
-            <VStack marginTop={4}>
+            {/* <VStack marginTop={4}>
               <CollapsibleCard
                 address="0x123123123"
                 date={new Date()}
@@ -48,8 +89,31 @@ export const Dashboard = () => {
                   rowTitles={["123", "234", "345"]}
                   rowValues={["s1", "s3", "s66"]}
                 />
-              </CollapsibleCard>
-            </VStack>
+              </CollapsibleCard> */}
+
+            {/* </VStack> */}
+            {userFormData.length > 0 &&
+              userFormData.map((data) => {
+                return (
+                  <VStack marginTop={4}>
+                    <CollapsibleCard
+                      address={userAddress}
+                      date={new Date()}
+                      title={data.fileTypeString}
+                    >
+                      <MultiRowSelectTable
+                        onChange={(vals) => {
+                          console.log(vals);
+                          setSelectedRows(vals);
+                        }}
+                        selectedRows={selectedRows}
+                        rowTitles={data.rowData.row}
+                        rowValues={data.rowData.values}
+                      />
+                    </CollapsibleCard>
+                  </VStack>
+                );
+              })}
             <Flex justifyContent="end" w="full">
               <Button className="buttonBase">generate proof</Button>
             </Flex>

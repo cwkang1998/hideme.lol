@@ -1,0 +1,30 @@
+[package]
+edition = "2021"
+name = "zk-circuit"
+version = "0.1.0"
+
+[features]
+dev-graph = ["halo2_proofs/dev-graph", "plotters"]
+
+[dependencies]
+halo2_gadgets = {git = "https://github.com/chee-chyuan/halo2.git", branch="wasm_change"}
+halo2_proofs = {git = "https://github.com/chee-chyuan/halo2.git", branch="wasm_change"}
+plotters = {version = "0.3.0", optional = true}
+rand_core = {version = "0.6", default-features = false, features = ["getrandom"]}
+sha2 = "0.10.6"
+tabbycat = {version = "0.1", features = ["attributes"], optional = true}
+ff = "0.12"
+bitvec = "1.0.1"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[target.'cfg(target_family = "wasm")'.dependencies]
+console_error_panic_hook = "0.1.7"
+getrandom = {version = "0.2", features = ["js"]}
+js-sys = "0.3"
+rayon = "1.5"
+wasm-bindgen = {version = "0.2.81", features = ["serde-serialize"]}
+wasm-bindgen-futures = "0.4"
+wasm-bindgen-rayon = {version = "1.0"}
+web-sys = {version = "0.3", features = ["Request", "Window", "Response"]}

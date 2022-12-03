@@ -91,9 +91,9 @@ export class CommittedFile extends Entity {
 }
 
 export class SaveIpfsCid extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -101,26 +101,24 @@ export class SaveIpfsCid extends Entity {
     assert(id != null, "Cannot save SaveIpfsCid entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type SaveIpfsCid must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type SaveIpfsCid must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("SaveIpfsCid", id.toBytes().toHexString(), this);
+      store.set("SaveIpfsCid", id.toString(), this);
     }
   }
 
-  static load(id: Bytes): SaveIpfsCid | null {
-    return changetype<SaveIpfsCid | null>(
-      store.get("SaveIpfsCid", id.toHexString())
-    );
+  static load(id: string): SaveIpfsCid | null {
+    return changetype<SaveIpfsCid | null>(store.get("SaveIpfsCid", id));
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get user(): Bytes {

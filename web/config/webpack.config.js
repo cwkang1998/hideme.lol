@@ -25,6 +25,7 @@ const ForkTsCheckerWebpackPlugin =
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash");
+const { ProvidePlugin } = require("webpack");
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
@@ -305,6 +306,21 @@ module.exports = function (webpackEnv) {
       modules: ["node_modules", paths.appNodeModules].concat(
         modules.additionalModulePaths || []
       ),
+      fallback: {
+        os: require.resolve("os-browserify/browser"),
+        path: require.resolve("path-browserify"),
+        stream: require.resolve("stream-browserify"),
+        crypto: require.resolve("crypto-browserify"),
+        http: require.resolve("stream-http"),
+        https: require.resolve("https-browserify"),
+        url: require.resolve("url"),
+        zlib: require.resolve("browserify-zlib"),
+        fs: false,
+        net: false,
+        tls: false,
+        assert: require.resolve("assert"),
+        "process/browser": require.resolve("process/browser"),
+      },
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
       // some tools, although we do not recommend using it, see:
@@ -568,6 +584,12 @@ module.exports = function (webpackEnv) {
       ].filter(Boolean),
     },
     plugins: [
+      // Use node module plugin
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+        Buffer: ['buffer', 'Buffer']
+      }),
+
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(

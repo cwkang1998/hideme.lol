@@ -99,8 +99,43 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
     });
   };
 
+  const renderRow = (row: any) => {
+    return (
+      <div className="proofCardRow">
+        <div className="proofCardRowData">
+          <div className="proofCardRowData_key">{row.selectedKey}</div>
+          <div className="proofCardRowData_value">{row.selectedValue}</div>
+        </div>
+        <div className="proofCardRowData_proof">proof: {row.proof.join('').slice(0,15)}...</div>
+        <div className="proofCardDivider_small"></div>
+      </div>
+    )
+  }
+
+  const renderEntityProof = (proof: any) => {
+    return (
+      <div className="proofEntitySection">
+        <h2 className="proofCardHeading">Certificate Name</h2>
+        <div className="proofCardData">{proof.certName}</div>
+        <div className="proofCardDivider"></div>
+        <h2 className="proofCardHeading">Entity Address</h2>
+        <div className="proofCardData">{proof.entityAddress}</div>
+        <h2 className="proofCardHeading">Certificate Hash</h2>
+        <div className="proofCardData">{proof.certHash}</div>
+        <h2 className="proofCardHeading">Address</h2>
+        <div className="proofCardData">{proof.address}</div>
+        <div className="proofCardHeading">Selected Rows</div>
+        <div className="proofCardDivider"></div>
+        {
+          proof.selectedRows.map(renderRow)
+        }
+      </div>
+    )
+  }
+  console.log('proofData: ', proofData);
+
   return (
-    <Flex direction="column" style={{ width: "100%" }}>
+    <div style={{ width: "100%" }}>
       <Hero
         title="Verifier"
         subtitle="How it works"
@@ -110,31 +145,46 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
           Upload a proof to verify its authenticity.
         </Text>
       </Hero>
-      <Flex direction="column" padding={8}>
-        <SectionTitle title="User Certificates" />
-        <VStack marginTop={4}>
-          <Box w="full" alignItems="start">
-            <Input
-              type="file"
-              sx={{
-                padding: "10px",
-                height: "auto",
-                "::file-selector-button": {
-                  border: "none",
-                  outline: "none",
-                  height: "auto",
-                  mr: 2,
-                  ...styles,
-                },
-              }}
-              onChange={uploadFile}
-              accept="application/json"
-              placeholder="Upload Proof"
-            />
-          </Box>
-          <Box></Box>
-        </VStack>
-      </Flex>
-    </Flex>
+      <div className="page-container-outer">
+        <div className="page-container">
+          <Flex direction="column" padding={8}>
+            <SectionTitle title="User Certificates" />
+            <VStack marginTop={4}>
+              <Box w="full" alignItems="start">
+                <Input
+                  type="file"
+                  sx={{
+                    padding: "10px",
+                    height: "auto",
+                    "::file-selector-button": {
+                      border: "none",
+                      outline: "none",
+                      height: "auto",
+                      mr: 2,
+                      ...styles,
+                    },
+                  }}
+                  onChange={uploadFile}
+                  accept="application/json"
+                  placeholder="Upload Proof"
+                  className="baseButton"
+                />
+              </Box>
+              <Box></Box>
+            </VStack>
+            {
+              proofData.length > 0 && (
+                <div className="proofCard">
+                  <h2 className="proofCardTitle">Proof</h2>
+                  {
+                    proofData.map(renderEntityProof)
+                  }
+                </div>
+              )
+            }
+          </Flex>
+        </div>
+      </div>
+    </div>
   );
 };

@@ -3,16 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.12",
+    "@chakra-ui/react": "^2.4.1",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@rainbow-me/rainbowkit": "^0.8.0",
+    "@types/react-helmet": "^6.1.6",
+    "comlink": "^4.3.1",
+    "ethers": "^5.7.2",
+    "framer-motion": "^7.6.17",
+    "js-sha256": "^0.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "wagmi": "^0.8.9",
+    "web-vitals": "^2.1.4",
+    "zk-circuit-client": "file:public/zk-circuit-client"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:wasm": "cd ../zk-circuit && wasm-pack build --target web --out-dir ../web/public/zk-circuit-client"
   },
   "eslintConfig": {
     "extends": [

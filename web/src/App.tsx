@@ -16,6 +16,7 @@ import { theme } from "./styles";
 import { Dashboard } from "./views/Dashboard";
 import { Verifier } from "./views/Verifier";
 import { Layout } from "./components/Layout";
+import { ConnectBiconomyWallet } from "./components/ConnectBiconomyWallet";
 
 const { chains, provider } = configureChains(
   [
@@ -101,6 +102,7 @@ const App = () => {
         <title>HIDEME.LOL</title>
       </Helmet>
       <ChakraProvider resetCSS theme={theme}>
+        <ConnectBiconomyWallet/>
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider
             chains={chains}

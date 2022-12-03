@@ -32,7 +32,7 @@ export const CollapsibleCard = ({
           <AccordionItem>
             <h2>
               <AccordionButton>
-                <Flex width={'100%'} justify={'space-between'}>
+                <Flex width={"100%"} justify={"space-between"}>
                   <Box>
                     <Heading size="md">{title}</Heading>
                   </Box>

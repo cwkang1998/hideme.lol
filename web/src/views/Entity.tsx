@@ -1,8 +1,9 @@
 import { Text } from "@chakra-ui/react";
 import { EntityForm } from "../components/EntityForm";
 import { Hero } from "../components/Hero";
+import { HideMeProps } from "../hideme-types";
 
-export const Entity = () => {
+export const Entity = ({ wasmWorkerApi }: HideMeProps) => {
   return (
     <div style={{ width: "100%" }}>
       <Hero
@@ -26,8 +27,7 @@ export const Entity = () => {
       </Hero>
       <div className="page-container-outer">
         <div className="page-container">
-          {/* <Title title="Entity Certificates" /> */}
-          <EntityForm />
+          <EntityForm wasmWorkerApi={wasmWorkerApi} />
         </div>
       </div>
     </div>

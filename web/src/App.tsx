@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet";
 import { wrap } from "comlink";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
   darkTheme,
@@ -13,8 +12,6 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
-import { Dashboard } from "./views/Dashboard";
-import { Verifier } from "./views/Verifier";
 import { TabsView } from "./views/TabsView";
 import { Test } from "./components/Test";
 
@@ -96,8 +93,7 @@ const App = () => {
             }}
             coolMode
           >
-            {/* <RouterProvider router={router} /> */}
-            <TabsView />
+            <TabsView wasmWorkerApi={workerApi} />
           </RainbowKitProvider>
         </WagmiConfig>
       </ChakraProvider>

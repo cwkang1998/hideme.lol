@@ -236,7 +236,7 @@ module.exports = function (webpackEnv) {
     },
     experiments: {
       futureDefaults: true,
-      asyncWebAssembly: true
+      asyncWebAssembly: true,
     },
     cache: {
       type: "filesystem",

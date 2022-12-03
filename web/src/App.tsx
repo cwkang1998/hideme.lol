@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet";
 import { wrap } from "comlink";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
   darkTheme,
@@ -12,6 +13,9 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
+import { Dashboard } from "./views/Dashboard";
+import { NavBar } from "./components/NavBar";
+import { Layout } from "./components/Layout";
 
 const { chains, provider } = configureChains(
   [
@@ -50,6 +54,20 @@ const Disclaimer: DisclaimerComponent = ({
     <Link href="https://disclaimer.xyz">Disclaimer</Link>
   </Text>
 );
+
+// Routing
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout/>,
+    children: [
+      {
+        path: "dashboard",
+        element: <Dashboard/>
+      }
+    ]
+  }
+]);
 
 const App = () => {
   // Memoize worker and workerApi to prevent unneccessary rerenders
@@ -90,7 +108,7 @@ const App = () => {
             }}
             coolMode
           >
-            <></>
+            <RouterProvider router={router} />
           </RainbowKitProvider>
         </WagmiConfig>
       </ChakraProvider>

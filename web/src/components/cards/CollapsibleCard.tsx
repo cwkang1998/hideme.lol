@@ -32,9 +32,20 @@ export const CollapsibleCard = ({
             <h2>
               <AccordionButton>
                 <HStack>
-                  <Box><Heading size="md">{title}</Heading></Box>
-                  <Box><Heading size="sm">Certified By:</Heading><Text>{address.slice(0,4)}...${address.slice(address.length - 4, address.length)}</Text></Box>
-                  <Box><Heading size="sm">Created On:</Heading><Text>{date.toLocaleDateString()}</Text></Box>
+                  <Box>
+                    <Heading size="md">{title}</Heading>
+                  </Box>
+                  <Box>
+                    <Heading size="sm">Certified By:</Heading>
+                    <Text>
+                      {address.slice(0, 4)}...$
+                      {address.slice(address.length - 4, address.length)}
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Heading size="sm">Created On:</Heading>
+                    <Text>{date.toLocaleDateString()}</Text>
+                  </Box>
                 </HStack>
                 <AccordionIcon />
               </AccordionButton>

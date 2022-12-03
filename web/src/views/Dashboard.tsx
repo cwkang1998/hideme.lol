@@ -1,8 +1,15 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react";
+import { useState } from "react";
+import { CollapsibleCard } from "../components/cards/CollapsibleCard";
+import { FlexibleFormTable } from "../components/FlexibleFormTable";
 import { Hero } from "../components/Hero";
+import { MultiRowSelectTable } from "../components/MultiRowSelectTable";
+import { SectionTitle } from "../components/SectionTitle";
 import SendPushNotification from "../utils/PushProtocol";
 
 export const Dashboard = () => {
+  const [selectedRows, setSelectedRows] = useState<(string | number)[]>(["0"]);
+
   return (
     <Flex direction="column" w="full">
       <Hero
@@ -21,13 +28,36 @@ export const Dashboard = () => {
           proof.
         </Text>
       </Hero>
+      <Flex direction="column" padding={8}>
+        <SectionTitle title="User Certificates" />
+        <VStack marginTop={4}>
+          <CollapsibleCard
+            address="0x123123123"
+            date={new Date()}
+            title="University"
+          >
+            <MultiRowSelectTable
+              onChange={(vals) => {
+                console.log(vals);
+                setSelectedRows(vals);
+              }}
+              selectedRows={selectedRows}
+              rowTitles={["123", "234", "345"]}
+              rowValues={["s1", "s3", "s66"]}
+            />
+          </CollapsibleCard>
+        </VStack>
+        <Flex justifyContent="end" w="full">
+          <Button>generate proof</Button>
+        </Flex>
+      </Flex>
     </Flex>
-      // <button
-      //   onClick={() =>
-      //     SendPushNotification("0x4bdB8234AD81F26985d257F36a2d2d8c30365546")
-      //   }
-      // >
-      //   Hola
-      // </button>
+    // <button
+    //   onClick={() =>
+    //     SendPushNotification("0x4bdB8234AD81F26985d257F36a2d2d8c30365546")
+    //   }
+    // >
+    //   Hola
+    // </button>
   );
 };

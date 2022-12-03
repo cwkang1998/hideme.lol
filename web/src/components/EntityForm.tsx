@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import type { HideMeProps, RowData } from "../hideme-types";
 import { HideMe__factory } from "../typechain-types";
-import { submnitFormToIpfs } from "../utils/ipfs";
+import { submitFormToIpfs } from "../utils/ipfs";
 import { FlexibleFormTable } from "./FlexibleFormTable";
 
 export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
@@ -67,7 +67,7 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
         console.log(commitment);
 
         // upload to ipfs
-        const ipfsCid = await submnitFormToIpfs(
+        const ipfsCid = await submitFormToIpfs(
           submitRowTitles,
           submitRowValues
         );

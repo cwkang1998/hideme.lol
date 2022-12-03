@@ -16,7 +16,7 @@ export default async function SendPushNotification(toAddress: String) {
       },
       payload: {
         title: `New form created notification`,
-        body: `A new form has been issued for you`,
+        body: `A new form has been issued for you , please visit www.hideme.lol and visit your dashboard`,
         cta: "",
         img: "",
       },

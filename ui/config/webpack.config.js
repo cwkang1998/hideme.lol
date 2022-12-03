@@ -234,6 +234,10 @@ module.exports = function (webpackEnv) {
         "Cross-Origin-Opener-Policy": "same-origin",
       },
     },
+    experiments: {
+      futureDefaults: true,
+      asyncWebAssembly: true
+    },
     cache: {
       type: "filesystem",
       version: createEnvironmentHash(env.raw),

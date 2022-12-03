@@ -15,7 +15,6 @@ export const TabsView = () => {
       return (<Verifier />);
     }
   }
-  console.log('page: ', page);
   return (
     <div>
       <NavBar page={page} setPage={setPage}>

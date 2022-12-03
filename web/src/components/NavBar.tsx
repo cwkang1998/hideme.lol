@@ -34,7 +34,7 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg={useColorModeValue("primaryBlue", "primaryBlue")} className="navbar" px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -71,7 +71,7 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
         ) : null}
       </Box>
 
-      <Box p={4}>{children}</Box>
+      <Box p={4} className="bg-gradient">{children}</Box>
     </>
   );
 };

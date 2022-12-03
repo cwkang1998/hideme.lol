@@ -14,7 +14,7 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
 import { Dashboard } from "./views/Dashboard";
-import { NavBar } from "./components/NavBar";
+import { Verifier } from "./views/Verifier";
 import { Layout } from "./components/Layout";
 import { Entity } from './views/Entity';
 
@@ -65,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard/>
+      },
+      {
+        path: "verifier",
+          element: <Verifier/>
       }
     ]
   },

@@ -95,7 +95,7 @@ const App = () => {
             }}
             coolMode
           >
-            {/* <MainPage wasmWorkerApi={workerApi} /> */}
+            <></>
           </RainbowKitProvider>
         </WagmiConfig>
       </ChakraProvider>

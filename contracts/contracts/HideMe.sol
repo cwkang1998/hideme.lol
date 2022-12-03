@@ -67,4 +67,18 @@ contract HideMe is AccessControl {
 
         emit SaveIpfsCid(user, fileType, cid, fileTypeString);
     }
+
+    function commitFileHashAndStoreUserCID(
+        address user,
+        string memory cid,
+        uint256 hash, 
+        string memory fileTypeString
+    ) external {
+        bytes32 fileType = keccak256(abi.encode(fileTypeString));
+        userCids[user][fileType] = cid;
+        userFileHashes[user][fileType] = hash;
+
+        emit CommittedFile(user, fileType, hash, fileTypeString);
+        emit SaveIpfsCid(user, fileType, cid, fileTypeString);
+    }
 }

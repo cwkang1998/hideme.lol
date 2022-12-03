@@ -15,11 +15,16 @@ export const generateStoreUserCIDTransaction = (
   return data;
 };
 
-export const generateCommitFileHash = (user: string, hash: string) => {
+export const generateCommitFileHash = (
+  user: string,
+  hash: string,
+  title: string
+) => {
   const hideMeInterface = HideMe__factory.createInterface();
   const data = hideMeInterface.encodeFunctionData("commitFileHash", [
     user,
     hash,
+    title,
   ]);
 
   return data;

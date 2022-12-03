@@ -6,7 +6,7 @@ dataSources:
     name: HideMe
     network: mumbai
     source:
-      address: "0x29f54044dE334A69b84228eFf52986678612E280"
+      address: "0xdBb40e382c826163fe7690973C990bFa4193900D"
       abi: HideMe
       startBlock: 29463343
     mapping:

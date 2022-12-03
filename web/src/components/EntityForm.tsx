@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import type { HideMeProps, RowData } from "../hideme-types";
 import { HideMe__factory } from "../typechain-types";
+import { submitFormToIpfs } from "../utils/ipfs";
 import { FlexibleFormTable } from "./FlexibleFormTable";
 
 export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
@@ -28,11 +29,9 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
       targetAddress &&
       targetAddress?.length > 0 &&
       isAddress(targetAddress) &&
-      rows.rowTitles.length > 1 &&
-      rows.rowValues.length > 1 &&
       rows.rowTitles.length === rows.rowValues.length
     ) {
-      if (targetAddress.length > 10) {
+      if (rows.rowTitles.length > 10) {
         return toast({
           title: "Create error",
           description: "Form currently only support up to 10 fields.",
@@ -66,7 +65,13 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
 
         setLoadingMessage("Submitting commitment...");
         console.log(commitment);
-        await submitCommitment(targetAddress, commitment);
+
+        // upload to ipfs
+        const ipfsCid = await submitFormToIpfs(
+          submitRowTitles,
+          submitRowValues
+        );
+        await submitCommitmentAndIpfsCid(targetAddress, commitment, ipfsCid, certTitle);
 
         setLoadingMessage("Exporting certificate...");
 
@@ -101,7 +106,8 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
 
   const submitCommitment = async (
     targetAddress: string,
-    commitment: string
+    commitment: string,
+    title: string
   ) => {
     const signer = await connector?.getSigner({
       chainId: await connector.getChainId(),
@@ -113,7 +119,51 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
       process.env.REACT_APP_PUBLIC_CONTRACT_ADDRESS!,
       signer
     );
-    const tx = await contract.commitFileHash(targetAddress, commitment);
+    const tx = await contract.commitFileHash(targetAddress, title, commitment);
+    return tx.wait();
+  };
+
+  const submitCommitmentAndIpfsCid = async (
+    targetAddress: string,
+    commitment: string,
+    cid: string,
+    title: string
+  ) => {
+    const signer = await connector?.getSigner({
+      chainId: await connector.getChainId(),
+    });
+    if (!address || !signer) {
+      throw new Error("Signer not available.");
+    }
+    const contract = HideMe__factory.connect(
+      process.env.REACT_APP_PUBLIC_CONTRACT_ADDRESS!,
+      signer
+    );
+    const tx = await contract.commitFileHashAndStoreUserCID(
+      targetAddress,
+      cid,
+      commitment,
+      title
+    );
+    return tx.wait();
+  };
+
+  const submitIpfs = async (
+    targetAddress: string,
+    cid: string,
+    title: string
+  ) => {
+    const signer = await connector?.getSigner({
+      chainId: await connector.getChainId(),
+    });
+    if (!address || !signer) {
+      throw new Error("Signer not available.");
+    }
+    const contract = HideMe__factory.connect(
+      process.env.REACT_APP_PUBLIC_CONTRACT_ADDRESS!,
+      signer
+    );
+    const tx = await contract.storeUserCID(targetAddress, cid, title);
     return tx.wait();
   };
 

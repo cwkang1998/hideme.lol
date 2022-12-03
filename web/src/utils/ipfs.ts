@@ -2,7 +2,7 @@ import { Web3Storage } from "web3.storage";
 import axios from "axios";
 
 //returns the cid of the data uplaoded
-export const submnitFormToIpfs = async (key: string[], value: string[]) => {
+export const submitFormToIpfs = async (key: string[], value: string[]) => {
   const rows = [key, value];
 
   const storage = new Web3Storage({

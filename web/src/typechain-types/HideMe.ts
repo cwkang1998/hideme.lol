@@ -31,7 +31,9 @@ export interface HideMeInterface extends utils.Interface {
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "RING_BUFFER_SIZE()": FunctionFragment;
-    "commitFileHash(address,uint256)": FunctionFragment;
+    "commitFileHash(address,string,uint256)": FunctionFragment;
+    "commitFileHashAndStoreUserCID(address,string,uint256,string)": FunctionFragment;
+    "commitFileHashOld(address,uint256)": FunctionFragment;
     "fileHashRingBuffers(address,uint256)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
@@ -42,6 +44,7 @@ export interface HideMeInterface extends utils.Interface {
     "storeUserCID(address,string,string)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "userCids(address,bytes32)": FunctionFragment;
+    "userFileHashes(address,bytes32)": FunctionFragment;
   };
 
   getFunction(
@@ -49,6 +52,8 @@ export interface HideMeInterface extends utils.Interface {
       | "DEFAULT_ADMIN_ROLE"
       | "RING_BUFFER_SIZE"
       | "commitFileHash"
+      | "commitFileHashAndStoreUserCID"
+      | "commitFileHashOld"
       | "fileHashRingBuffers"
       | "getRoleAdmin"
       | "grantRole"
@@ -59,6 +64,7 @@ export interface HideMeInterface extends utils.Interface {
       | "storeUserCID"
       | "supportsInterface"
       | "userCids"
+      | "userFileHashes"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -71,6 +77,23 @@ export interface HideMeInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "commitFileHash",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "commitFileHashAndStoreUserCID",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "commitFileHashOld",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -117,6 +140,10 @@ export interface HideMeInterface extends utils.Interface {
     functionFragment: "userCids",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "userFileHashes",
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
@@ -128,6 +155,14 @@ export interface HideMeInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "commitFileHash",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "commitFileHashAndStoreUserCID",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "commitFileHashOld",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -158,9 +193,14 @@ export interface HideMeInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "userCids", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "userFileHashes",
+    data: BytesLike
+  ): Result;
 
   events: {
-    "CommittedFile(address,uint256)": EventFragment;
+    "CommittedFile(address,bytes32,uint256,string)": EventFragment;
+    "CommittedFileOld(address,uint256)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
     "RoleRevoked(bytes32,address,address)": EventFragment;
@@ -168,6 +208,7 @@ export interface HideMeInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "CommittedFile"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CommittedFileOld"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
@@ -176,14 +217,28 @@ export interface HideMeInterface extends utils.Interface {
 
 export interface CommittedFileEventObject {
   user: string;
+  fileType: string;
   hash: BigNumber;
+  fileTypeString: string;
 }
 export type CommittedFileEvent = TypedEvent<
-  [string, BigNumber],
+  [string, string, BigNumber, string],
   CommittedFileEventObject
 >;
 
 export type CommittedFileEventFilter = TypedEventFilter<CommittedFileEvent>;
+
+export interface CommittedFileOldEventObject {
+  user: string;
+  hash: BigNumber;
+}
+export type CommittedFileOldEvent = TypedEvent<
+  [string, BigNumber],
+  CommittedFileOldEventObject
+>;
+
+export type CommittedFileOldEventFilter =
+  TypedEventFilter<CommittedFileOldEvent>;
 
 export interface RoleAdminChangedEventObject {
   role: string;
@@ -268,6 +323,21 @@ export interface HideMe extends BaseContract {
 
     commitFileHash(
       user: PromiseOrValue<string>,
+      fileTypeString: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    commitFileHashAndStoreUserCID(
+      user: PromiseOrValue<string>,
+      cid: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      fileTypeString: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    commitFileHashOld(
+      user: PromiseOrValue<string>,
       hash: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -329,6 +399,12 @@ export interface HideMe extends BaseContract {
       arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[string]>;
+
+    userFileHashes(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -336,6 +412,21 @@ export interface HideMe extends BaseContract {
   RING_BUFFER_SIZE(overrides?: CallOverrides): Promise<number>;
 
   commitFileHash(
+    user: PromiseOrValue<string>,
+    fileTypeString: PromiseOrValue<string>,
+    hash: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  commitFileHashAndStoreUserCID(
+    user: PromiseOrValue<string>,
+    cid: PromiseOrValue<string>,
+    hash: PromiseOrValue<BigNumberish>,
+    fileTypeString: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  commitFileHashOld(
     user: PromiseOrValue<string>,
     hash: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -399,12 +490,33 @@ export interface HideMe extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  userFileHashes(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
     RING_BUFFER_SIZE(overrides?: CallOverrides): Promise<number>;
 
     commitFileHash(
+      user: PromiseOrValue<string>,
+      fileTypeString: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    commitFileHashAndStoreUserCID(
+      user: PromiseOrValue<string>,
+      cid: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      fileTypeString: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    commitFileHashOld(
       user: PromiseOrValue<string>,
       hash: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -467,17 +579,36 @@ export interface HideMe extends BaseContract {
       arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    userFileHashes(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   filters: {
-    "CommittedFile(address,uint256)"(
+    "CommittedFile(address,bytes32,uint256,string)"(
       user?: PromiseOrValue<string> | null,
-      hash?: null
+      fileType?: PromiseOrValue<BytesLike> | null,
+      hash?: null,
+      fileTypeString?: null
     ): CommittedFileEventFilter;
     CommittedFile(
       user?: PromiseOrValue<string> | null,
-      hash?: null
+      fileType?: PromiseOrValue<BytesLike> | null,
+      hash?: null,
+      fileTypeString?: null
     ): CommittedFileEventFilter;
+
+    "CommittedFileOld(address,uint256)"(
+      user?: PromiseOrValue<string> | null,
+      hash?: null
+    ): CommittedFileOldEventFilter;
+    CommittedFileOld(
+      user?: PromiseOrValue<string> | null,
+      hash?: null
+    ): CommittedFileOldEventFilter;
 
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
       role?: PromiseOrValue<BytesLike> | null,
@@ -532,6 +663,21 @@ export interface HideMe extends BaseContract {
     RING_BUFFER_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
     commitFileHash(
+      user: PromiseOrValue<string>,
+      fileTypeString: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    commitFileHashAndStoreUserCID(
+      user: PromiseOrValue<string>,
+      cid: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      fileTypeString: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    commitFileHashOld(
       user: PromiseOrValue<string>,
       hash: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -594,6 +740,12 @@ export interface HideMe extends BaseContract {
       arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    userFileHashes(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -604,6 +756,21 @@ export interface HideMe extends BaseContract {
     RING_BUFFER_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     commitFileHash(
+      user: PromiseOrValue<string>,
+      fileTypeString: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    commitFileHashAndStoreUserCID(
+      user: PromiseOrValue<string>,
+      cid: PromiseOrValue<string>,
+      hash: PromiseOrValue<BigNumberish>,
+      fileTypeString: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    commitFileHashOld(
       user: PromiseOrValue<string>,
       hash: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -662,6 +829,12 @@ export interface HideMe extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     userCids(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    userFileHashes(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides

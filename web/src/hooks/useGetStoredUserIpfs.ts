@@ -4,20 +4,20 @@ import { useEffect } from "react";
 import { useCustomApolloClient } from "./useCustomApolloClient";
 
 const GET_STORED_USER_IPFS = gql`
-    query getStoredUserIpfs($count: Int!, $user: Bytes!) {
-        saveIpfsCids(
-            first: $count
-            where: { user: $user }
-            orderBy: blockTimestamp
-            orderDirection: desc
-        ) {
-            id
-            user
-            fileType
-            cid
-            blockTimestamp 
-        }
+  query getStoredUserIpfs($count: Int!, $user: Bytes!) {
+    saveIpfsCids(
+      first: $count
+      where: { user: $user }
+      orderBy: blockTimestamp
+      orderDirection: desc
+    ) {
+      id
+      user
+      fileType
+      cid
+      blockTimestamp
     }
+  }
 `;
 
 export const useGetStoredUserIpfs = (

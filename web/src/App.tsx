@@ -16,6 +16,7 @@ import { theme } from "./styles";
 import { Dashboard } from "./views/Dashboard";
 import { Verifier } from "./views/Verifier";
 import { TabsView } from './views/TabsView';
+import { Test } from "./components/Test";
 
 const { chains, provider } = configureChains(
   [
@@ -79,6 +80,7 @@ const App = () => {
 
   return (
     <>
+      <Test />
       <Helmet>
         <title>HIDEME.LOL</title>
       </Helmet>

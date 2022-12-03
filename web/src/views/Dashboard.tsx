@@ -29,7 +29,6 @@ export const Dashboard = () => {
         </Text>
       </Hero>
 
-
       <div className="page-container-outer">
         <div className="page-container">
           <Flex direction="column" padding={8}>
@@ -57,7 +56,6 @@ export const Dashboard = () => {
           </Flex>
         </div>
       </div>
-
     </Flex>
     // <button
     //   onClick={() =>

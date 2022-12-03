@@ -7,7 +7,7 @@ import { HideMeProps } from "../hideme-types";
 
 export const TabsView = ({ wasmWorkerApi }: HideMeProps) => {
   const [page, setPage] = useState<string>("entity");
-  
+
   const renderPage = () => {
     if (page === "entity") {
       return <Entity wasmWorkerApi={wasmWorkerApi} />;

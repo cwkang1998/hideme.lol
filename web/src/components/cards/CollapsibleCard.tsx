@@ -7,9 +7,7 @@ import {
   Box,
   Card,
   CardBody,
-  CardHeader,
   Heading,
-  HStack,
   Text,
   Flex,
 } from "@chakra-ui/react";

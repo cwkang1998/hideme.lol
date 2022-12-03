@@ -32,6 +32,15 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
       rows.rowValues.length > 1 &&
       rows.rowTitles.length === rows.rowValues.length
     ) {
+      if (targetAddress.length > 10) {
+        return toast({
+          title: "Create error",
+          description: "Form currently only support up to 10 fields.",
+          status: "error",
+          isClosable: true,
+        });
+      }
+
       try {
         setLoadingMessage("Creating commitment...");
         // Hack for filling up to 10 inputs

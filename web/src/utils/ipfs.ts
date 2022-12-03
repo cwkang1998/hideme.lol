@@ -14,7 +14,6 @@ export const submnitFormToIpfs = async (key: string[], value: string[]) => {
   console.log("debugging : ", rows);
 
   const files = [
-    new File(["contents-of-file-1"], "plain-utf8.txt"),
     new File([blob], "rows.json"),
   ];
   const cid = await storage.put(files);

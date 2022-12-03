@@ -1,19 +1,9 @@
-import { ChangeEvent } from "react";
+import { saveAs } from "file-saver";
+import { ProofData } from "../hideme-types";
 
-export const exportProofJson = (
-  address: String,
-  selectedRowTitle: string,
-  selectedRowContent: string,
-  proof: string
-) => {
-  const jsonObject = {
-    address: address,
-    selectedRowTitle: selectedRowTitle,
-    selectedRowContent: selectedRowContent,
-    proof: proof,
-  };
-
-  let proofFile = new Blob([JSON.stringify(jsonObject)], {
+export const exportProofJson = (proofData: ProofData[]) => {
+  const proofFile = new Blob([JSON.stringify(proofData)], {
     type: "application/json",
   });
+  saveAs(proofFile, "proof.json");
 };

@@ -11,20 +11,10 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import { Hero } from "../components/Hero";
 import { SectionTitle } from "../components/SectionTitle";
-import { HideMeProps } from "../hideme-types";
+import { HideMeProps, ProofData } from "../hideme-types";
 import { HideMe__factory } from "../typechain-types";
 
-type ProofData = {
-  entityAddress: string;
-  address: string;
-  certName: string;
-  certHash: string;
-  selectedRows: {
-    selectedKey: string;
-    selectedValue: string;
-    proof: Uint32Array;
-  }[];
-};
+
 
 export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
   const styles = useMultiStyleConfig("Button", { variant: "outline" });

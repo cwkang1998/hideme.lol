@@ -13,11 +13,10 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "./DeleteIcon";
-// import { RowData } from "../../file-hasher-types";
-import React from "react";
+import type { RowData } from "../hideme-types";
 
 export type FlexibleFormTableProps = {
-  onChange?: ({ rowTitles, rowValues }: any) => any;
+  onChange?: ({ rowTitles, rowValues }: RowData) => void;
 };
 
 export const FlexibleFormTable = ({
@@ -53,14 +52,14 @@ export const FlexibleFormTable = ({
         setRowTitles((prevRowTitles) => {
           const newTitles = [...prevRowTitles];
           newTitles[index] = event.target.value;
-          onChange({ rowTitles: newTitles, rowValues });
+          onChange({ rowTitles: newTitles, rowValues: [...rowValues] });
           return newTitles;
         });
       } else {
         setRowValues((prevRowValues) => {
           const newValues = [...prevRowValues];
           newValues[index] = event.target.value;
-          onChange({ rowTitles, rowValues: newValues });
+          onChange({ rowTitles: [...rowTitles], rowValues: newValues });
           return newValues;
         });
       }

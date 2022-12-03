@@ -7,7 +7,6 @@ export const Test = () => {
   );
 
   if (!loading) {
-    debugger;
     console.log(JSON.stringify(data));
   }
 

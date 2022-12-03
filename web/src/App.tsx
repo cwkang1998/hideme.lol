@@ -93,7 +93,7 @@ const App = () => {
             }}
             coolMode
           >
-            <TabsView />
+            <TabsView wasmWorkerApi={workerApi}/>
           </RainbowKitProvider>
         </WagmiConfig>
       </ChakraProvider>

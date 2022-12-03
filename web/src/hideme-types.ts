@@ -1,7 +1,7 @@
 import type { Remote } from "comlink";
 import type { HideMeClient } from "./hideme.worker";
 
-export type FileHasherProps = {
+export type HideMeProps = {
   wasmWorkerApi: Remote<HideMeClient>;
 };
 

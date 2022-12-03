@@ -1,8 +1,8 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 type TitleProps = {
   title: string;
-}
+};
 
 export const Title = ({ title }: TitleProps) => {
   return (
@@ -10,5 +10,5 @@ export const Title = ({ title }: TitleProps) => {
       <h1 className="title">{title}</h1>
       <div className="horizontalLine"></div>
     </Box>
-  )
-}
+  );
+};

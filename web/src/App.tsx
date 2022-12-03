@@ -16,7 +16,7 @@ import { theme } from "./styles";
 import { Dashboard } from "./views/Dashboard";
 import { Verifier } from "./views/Verifier";
 import { Layout } from "./components/Layout";
-import { Entity } from './views/Entity';
+import { Entity } from "./views/Entity";
 
 const { chains, provider } = configureChains(
   [
@@ -60,22 +60,22 @@ const Disclaimer: DisclaimerComponent = ({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
         path: "dashboard",
-        element: <Dashboard/>
+        element: <Dashboard />,
       },
       {
         path: "verifier",
-          element: <Verifier/>
+        element: <Verifier />,
       },
       {
         path: "entity",
-        element: <Entity/>
-      }
-    ]
-  }
+        element: <Entity />,
+      },
+    ],
+  },
 ]);
 
 const App = () => {

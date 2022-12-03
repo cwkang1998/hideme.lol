@@ -12,7 +12,7 @@ const theme = extendTheme({
     primaryBlue: "#063589",
     primaryDarkBlue: "#020123",
     actionPurple: "#E620EA",
-    lightGray: "#D1C6C6"
+    lightGray: "#D1C6C6",
   },
   fonts,
 });

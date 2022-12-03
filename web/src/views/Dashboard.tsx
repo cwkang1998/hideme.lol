@@ -47,7 +47,6 @@ export const Dashboard = ({ wasmWorkerApi }: HideMeProps) => {
           ...item,
           rowData: ipfsRowData[idx],
         }));
-        debugger;
 
         setUserFormData(userFormData);
       }

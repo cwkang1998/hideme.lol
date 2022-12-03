@@ -1,26 +1,71 @@
-# HideMe.LOL
+<hr> 
 
-## Problem Statement
+# ETH India - hideme.lol 🇮🇳 
 
-Here we have our health certificate. On it, it records our blood type, blood sugar level, medical history and many other health information, some may be too personal to share it to anyone.
+## [**CLICK TO LIVE URL**](www.hideme.lol) 🚀
 
-Then, one day for some reason, the blood bank would like to know our blood type and demands to read our latest health record. In normal situation, we commit to the fact that all the details in the health form has been scrutinized by the blood bank, including more sensitive data such as medical history....
+## **Background** 🤔
 
-What if, there is a way to share only specific data that we want on the health cert without revealing other more personal information?
+Protocols nowadays allow us to proof that data is correct by revealing nothing about it or preserving a fixed amount of itself. No one allows us to **CHOOSE** what we want to hide and what we want to expose.
 
-Such a situation exist not only in the healthcare industry, but think of a business that wants to reveal only a certain transaction that it has performed while hiding other transaction that may relate to its trade secret. Or, showing our future employer our GCPA score on a resume without having reveal how long it takes for us to graduate.
+## **Solution - hideme.lol** 💡
 
-From the few examples above, we observe that it would be cool to show a part of our documents reliably with the recepient being able to trust the information that we shared, while also having the ability to not share information on the same document that we deem too sensitive.
+- A protocol which utilizes zero knowledge proof that makes this possible. **``(hideme.lol)``** 
 
-## High level mechamism
+- Allows people creators of certain data to commit a hash of the content to the blockchain (issuers), utilizing ethereum as a settlement layer. An issuer could be a DAO, a trade manager, random users, protocol, if we go outside the web3 world, we can count in universities, auditors, hospitals, etc. **``(Composable)``**
 
-We designed a protocol which involves zero knowledge proof that made the described scenario above possible. The issuer of the document will commit a hash of the document to the blockchain, utilizing blockchain as a settlement layer. The issuer could be the hospital, the university or auditors.
-The document is then sent to the owner in plain text. The owner now is reponsibile of storing his/her own data.
-When sharing the public data to the recepient, the owner selected only the information that is shareable, creates a zero knowledge proof that the file hashes to the committed value on the blockchain and that the information indeed is part of the document.
-The verifier upon receiving it, compares the commitment hash (public input) to that store on the blockchain and is able to accept (if proof true) or deny (if proof is false).
-Our goal is to allow any party to have access to this technology and we created this project as an infrastructure, which allows the underlying zkp to be generic and would be flexible enough.
+- The data is then sent to the owner in plain text ( receiver ) . The owner is now reponsibile of storing his/her own data. **``(Data Ownership)``**
 
-### Design of the document
+- Owners of the data can choose only the information that they want to reveal, and generate a proof that the submitted information is part of the actual content **``(Privacy preserving)``**
+
+- The verifier receives a proof and public input, performs a verification that the actual passed data matches the commited value stored on the blockchain **``(Secure & Trustworthy)``**
+
+- Allow any party to have access to this technology, by letting the underlying zkp to be generic and flexible enough. **``(infrastructure)``**
+
+## **Repos** 🙇🏽
+
+- frontend : https://github.com/cwkang1998/hideme.lol
+- server : https://github.com/jrcarlos2000/eth-india-server
+- graph : https://github.com/cwkang1998/hideme.lol/tree/main/subgraph_hideme
+- ZK-circuits [CORE] : https://github.com/cwkang1998/hideme.lol/tree/main/zk-circuit
+
+## 🎧 [**Pitch**](pitch.com/public/3d327690-33fc-47d7-934c-9176566b2e92)
+
+## **Video Demo** 📀
+
+[![Demo](./readme-assets/demo-yt.png)](https://www.youtube.com/)
+## **Technologies ( PoC )**
+
+### ``HALO2 ( ZCASH )``
+
+ZK Circuits are generated using the halo2 library in rust
+
+### ``IPFS`` 
+
+Data issued is encrypted and stored on-chain using IPFS. This doesnt require us to save our data in our computer, but at the same time keeping it private.
+
+### ``Biconomy``
+
+Provides us with social login and gasless transactions for a much better user experience, allowing us to easily onboard non web3 users into our protocol
+
+### ``Push``
+
+When data is ``issued`` we notify the receiever via ``email`` by using Push Protocol SDK, connecting it to our mail bot
+
+### ``The Graph``
+
+Indexes the transactions and data of the commitment hashes issued by entities to users. Helps to keep better track and its more efficient than reading from the blockchain. 
+
+### ``Covalent``
+
+### ``QuicknNode``
+
+### ``Polygon``
+
+<hr> 
+
+# ZK Technical design
+## **Design of the document**
 
 A generic form that consist of two columns (one row for title, another row for content). Up to 10 rows.
 
@@ -33,12 +78,16 @@ eg:
 
 Each row is able to store string of text. The title depends on the use case, for example in a health certificate, we can imagine that there will be row with the title `blood_type` with the `content` A+ for example. This can be as flexible as possible.
 
-### Generation of commitment hash
+<br />
+
+## **Generation of commitment hash**
 
 We utilizes Poseidon hash function as it is a Snark friendly hash function that will allow us to reduce the number of constraints as compared to when we use sha256.
 We perform a double hashing mechanism (i.e horizontal and vertical).
 
-#### Horizontal hashing
+<br />
+
+## **Horizontal hashing**
 
 | Title | Content | Horizontal Result |
 | ----- | ------- | ----------------- |
@@ -47,8 +96,9 @@ We perform a double hashing mechanism (i.e horizontal and vertical).
 | ...   | ...     | ...               |
 
 The horizontal hashing hashes the title and content row by row, producing a resultant hash for that row as seen in `Horizontal Result` above.
+<br />
 
-#### Vertical hashing
+## **Vertical hashing**
 
 | Horizontal Result |
 | ----------------- |
@@ -67,7 +117,9 @@ By publishing on the commitment hash, we are:
 1. ensuring that the file in untampered
 2. maintain privacy to the content of the file
 
-### Proof generation
+<br />
+
+## **Proof generation**
 
 The owner of document is able to select one row at a time to reveal (tbd to extend to multiple rows) and will generate a zk proof to proof that the information of the selected row is correct
 
@@ -75,12 +127,16 @@ The public inputs consist of the file commitment and the information of the sele
 
 The private inputs will be the content of the entire document and also the `selector_index`, displayed as an array of ones and zeros. One representing the selected row.
 
-### Concurrency management
+<br />
+
+## **Concurrency management**
 
 As our solution is designed to be generic, there may be cases whereby the committed hash changes rather often. As a result, while the prover takes time to generate proof on a commited hash, a new hash overwrites the hash and this will cause the proof verification to fail.
 As such, we design a ring buffer data structure to store the commited hash and the verifier is allowed to query the commited hash up to a certain history depth
 
-### Circuit explanation
+<br />
+
+## **Circuit explanation**
 
 The private inputs is hashed and is contrainted to the file commitment (public input). This ensure that the file is not tampered.
 
@@ -88,7 +144,11 @@ The selected row is checked by the circuit to ensure that it exist in the docume
 
 Finally, the selector index in also constraint to boolean values to ensure soundness of the proof.
 
-## Benchmark
+<hr> 
+<hr> 
+
+# **Benchmarks**
+
 
 | Row number | time elapsed (s) |       |       | k   |
 | ---------- | ---------------- | ----- | ----- | --- |
@@ -105,16 +165,3 @@ Finally, the selector index in also constraint to boolean values to ensure sound
 | 12         | 18.27            | 18.28 | 18.43 | 12  |
 | 13         | 30.08            | 30.19 | 29.95 | 13  |
 | 14         | 30.43            | 30.63 | 30.93 | 13  |
-
-## Technology used
-
-- Rust for Halo2 libray (ZCash)
-- Solidity that is able to deployed on EVM chain (eg. Polygon, Scroll, Ethereum)
-- Wasm for proof generation and verification on browser
-- Rainbow kit for easy smart contract interaction
-- Create react app for frontend
-
-## Future work
-
-- Tooling to allows this infrastucture to be set up easily
-- Improve proving time

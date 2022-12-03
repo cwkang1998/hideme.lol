@@ -76,6 +76,7 @@
     "wagmi": "^0.8.9",
     "wasm-pack": "^0.10.3",
     "web-vitals": "^2.1.4",
+    "web3.storage": "^4.4.0",
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",

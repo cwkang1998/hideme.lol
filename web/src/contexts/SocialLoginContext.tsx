@@ -68,6 +68,7 @@ export const Web3AuthProvider = ({ children }: any) => {
   }, [address, socialLoginSDK]);
 
   const connect = useCallback(async () => {
+    console.log('cc', socialLoginSDK);
     if (address) return;
     if (socialLoginSDK?.provider) {
       setLoading(true);
@@ -88,17 +89,23 @@ export const Web3AuthProvider = ({ children }: any) => {
       setLoading(false);
       return;
     }
+    console.log("...", socialLoginSDK);
     if (socialLoginSDK) {
       socialLoginSDK.showWallet();
       return socialLoginSDK;
     }
+
     setLoading(true);
-    const sdk = await getSocialLoginSDK(ethers.utils.hexValue(80001));
+    console.log("??");
+    const sdk = await getSocialLoginSDK();
+    console.log('sdk', sdk);
     sdk.showConnectModal();
     sdk.showWallet();
+    console.log(sdk);
     setSocialLoginSDK(sdk);
     setLoading(false);
     return socialLoginSDK;
+
   }, [address, socialLoginSDK]);
 
   const getUserInfo = useCallback(async () => {
@@ -109,23 +116,13 @@ export const Web3AuthProvider = ({ children }: any) => {
     }
   }, [socialLoginSDK]);
 
-  // after social login -> set provider info
-  useEffect(() => {
-    (async () => {
-      if (window && (window as any).location.hash && !address) {
-        const sdk = await getSocialLoginSDK(ethers.utils.hexValue(80001));
-        setSocialLoginSDK(sdk);
-      }
-    })();
-  }, [connect, address]);
-
   // after metamask login -> get provider event
   useEffect(() => {
     const interval = setInterval(async () => {
       if (address) {
         clearInterval(interval);
       }
-      if (socialLoginSDK && !address) {
+      if (socialLoginSDK?.provider && !address) {
         connect();
       }
     }, 1000);

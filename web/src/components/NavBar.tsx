@@ -11,6 +11,9 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { PropsWithChildren } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useWeb3AuthContext } from "../contexts/SocialLoginContext";
+import { useSmartAccountContext } from "../contexts/SmartAccountContext";
+import { ConnectBiconomyWallet } from "./ConnectBiconomyWallet";
 
 const Links = ["Entity", "Dashboard", "Verifier"];
 
@@ -30,6 +33,30 @@ const NavLink = ({ children }: PropsWithChildren<{}>) => (
 );
 
 export const NavBar = ({children}: PropsWithChildren<{}>) => {
+  const {
+    address,
+    loading: eoaLoading,
+    userInfo,
+    connect,
+    disconnect,
+    getUserInfo,
+  } = useWeb3AuthContext();
+  const {
+    selectedAccount,
+    loading: scwLoading,
+    setSelectedAccount,
+  } = useSmartAccountContext();
+
+  const onButtonClick = () => {
+    console.log(address);
+    console.log(selectedAccount)
+    if (!address) {
+      connect();
+    } else {
+      setSelectedAccount(null);
+      disconnect();
+    }
+  };
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -56,6 +83,7 @@ export const NavBar = ({children}: PropsWithChildren<{}>) => {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
+            <ConnectBiconomyWallet address={address} onButtonClick={onButtonClick}/>
             <ConnectButton />
           </Flex>
         </Flex>

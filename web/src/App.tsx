@@ -10,12 +10,15 @@ import {
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
+
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
 import { Dashboard } from "./views/Dashboard";
 import { Verifier } from "./views/Verifier";
 import { Layout } from "./components/Layout";
+import { SmartAccountProvider } from "./contexts/SmartAccountContext";
+import { Web3AuthProvider } from "./contexts/SocialLoginContext";
 
 const { chains, provider } = configureChains(
   [
@@ -59,18 +62,18 @@ const Disclaimer: DisclaimerComponent = ({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
         path: "dashboard",
-        element: <Dashboard/>
+        element: <Dashboard />,
       },
       {
         path: "verifier",
-          element: <Verifier/>
-      }
-    ]
-  }
+        element: <Verifier />,
+      },
+    ],
+  },
 ]);
 
 const App = () => {
@@ -102,18 +105,22 @@ const App = () => {
       </Helmet>
       <ChakraProvider resetCSS theme={theme}>
         <WagmiConfig client={wagmiClient}>
-          <RainbowKitProvider
-            chains={chains}
-            theme={darkTheme({
-              ...darkTheme.accentColors.blue,
-            })}
-            appInfo={{
-              disclaimer: Disclaimer,
-            }}
-            coolMode
-          >
-            <RouterProvider router={router} />
-          </RainbowKitProvider>
+          <Web3AuthProvider>
+            <SmartAccountProvider>
+              <RainbowKitProvider
+                chains={chains}
+                theme={darkTheme({
+                  ...darkTheme.accentColors.blue,
+                })}
+                appInfo={{
+                  disclaimer: Disclaimer,
+                }}
+                coolMode
+              >
+                <RouterProvider router={router} />
+              </RainbowKitProvider>
+            </SmartAccountProvider>
+          </Web3AuthProvider>
         </WagmiConfig>
       </ChakraProvider>
     </>

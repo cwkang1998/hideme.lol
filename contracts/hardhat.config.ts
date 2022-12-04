@@ -31,6 +31,11 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       // 0x9D1afC5B17c0785061EB1f25BAE3Aa302326c698
     },
+    moonbaseAlpha: {
+      url: "https://rpc.api.moonbase.moonbeam.network",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      // 0x9D1afC5B17c0785061EB1f25BAE3Aa302326c698
+    },
     hardhat: {
       accounts: {
         count: 20,
@@ -42,6 +47,7 @@ const config: HardhatUserConfig = {
     apiKey: {
       goerli: process.env.ETHERSCAN_API_KEY!,
       polygonMumbai: process.env.POLYGONSCAN_API_KEY!,
+      moonbaseAlpha: process.env.MOONSCAN_API_KEY!,
     },
   },
 };

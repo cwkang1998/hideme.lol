@@ -13,14 +13,14 @@ export const submitFormToIpfs = async (key: string[], value: string[]) => {
 
   console.log("debugging : ", rows);
 
-  const files = [
-    new File([blob], "rows.json"),
-  ];
+  const files = [new File([blob], "rows.json")];
   const cid = await storage.put(files);
   return cid;
 };
 
 export const readRowsFromIpfs = async (cid: String) => {
-  let res = await axios.get<[string[], string[]]>(`https://${cid}.ipfs.w3s.link/rows.json`);
+  let res = await axios.get<[string[], string[]]>(
+    `https://${cid}.ipfs.w3s.link/rows.json`
+  );
   return res.data;
 };

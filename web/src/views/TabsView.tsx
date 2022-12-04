@@ -14,7 +14,7 @@ export const TabsView = ({ wasmWorkerApi }: HideMeProps) => {
     } else if (page === "dashboard") {
       return <Dashboard wasmWorkerApi={wasmWorkerApi} />;
     } else if (page === "verifier") {
-      return <Verifier wasmWorkerApi={wasmWorkerApi}/>;
+      return <Verifier wasmWorkerApi={wasmWorkerApi} />;
     }
   };
   return (

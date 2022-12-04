@@ -76,7 +76,9 @@ export const NavBar = ({ children, page, setPage }: NavBarType) => {
           </Flex>
         </Flex>
       </Box>
-      <Flex className="bg-gradient" h="full">{children}</Flex>
+      <Flex className="bg-gradient" h="full">
+        {children}
+      </Flex>
     </>
   );
 };

@@ -15,15 +15,44 @@ import { theme } from "./styles";
 import { TabsView } from "./views/TabsView";
 import { Test } from "./components/Test";
 
+const cronosTestnet = {
+  id: 338,
+  name: "Cronos Tesnet",
+  network: "Cronos",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Cronos Network ",
+    symbol: "CRO",
+  },
+  rpcUrls: {
+    default: "https://evm-t3.cronos.org	",
+  },
+  blockExplorers: {
+    default: { name: "SnowTrace", url: "https://snowtrace.io" },
+  },
+  testnet: false,
+};
+
+const moonbeanTestnet = {
+  id: 1287,
+  name: "Moonbean",
+  network: "MOON",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Moonbean Network ",
+    symbol: "MOON",
+  },
+  rpcUrls: {
+    default: "https://rpc.api.moonbase.moonbeam.network",
+  },
+  blockExplorers: {
+    default: { name: "SnowTrace", url: "https://snowtrace.io" },
+  },
+  testnet: false,
+};
+
 const { chains, provider } = configureChains(
-  [
-    chain.mainnet,
-    chain.goerli,
-    chain.polygon,
-    chain.polygonMumbai,
-    chain.optimism,
-    chain.arbitrum,
-  ],
+  [chain.polygonMumbai, cronosTestnet, moonbeanTestnet],
   [publicProvider()]
 );
 

@@ -4,32 +4,24 @@ schema:
 dataSources:
   - kind: ethereum
     name: HideMe
-    network: goerli
+    network: mumbai
     source:
-      address: "0x5261ad65cec0708D0E485507C12F8aEA7218763f"
+      address: "0xdBb40e382c826163fe7690973C990bFa4193900D"
       abi: HideMe
+      startBlock: 29463343
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - CommittedFile
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
         - SaveIpfsCid
       abis:
         - name: HideMe
           file: ./abis/HideMe.json
       eventHandlers:
-        - event: CommittedFile(indexed address,uint256)
+        - event: CommittedFile(indexed address,indexed bytes32,uint256,string)
           handler: handleCommittedFile
-        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-          handler: handleRoleAdminChanged
-        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleGranted
-        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleRevoked
-        - event: SaveIpfsCid(indexed address,indexed bytes32,string)
+        - event: SaveIpfsCid(indexed address,indexed bytes32,string,string)
           handler: handleSaveIpfsCid
       file: ./src/hide-me.ts

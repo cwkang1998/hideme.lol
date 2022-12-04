@@ -18,14 +18,23 @@ const config: HardhatUserConfig = {
   },
   networks: {
     goerli: {
-      url: process.env.GOERLI_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      url: process.env.GOERLI_RPC_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     mumbai: {
-      url: process.env.MUMBAI_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      // url: process.env.MUMBAI_RPC_URL || "",
+      url: "https://morning-necessary-mountain.matic-testnet.discover.quiknode.pro/a136a46616ee8a00ce92bcd5efdfa041bc0a0759/",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
+    cronosTestnet: {
+      url: "https://evm-t3.cronos.org",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      // 0x9D1afC5B17c0785061EB1f25BAE3Aa302326c698
+    },
+    moonbaseAlpha: {
+      url: "https://rpc.api.moonbase.moonbeam.network",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      // 0x9D1afC5B17c0785061EB1f25BAE3Aa302326c698
     },
     hardhat: {
       accounts: {
@@ -35,7 +44,11 @@ const config: HardhatUserConfig = {
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      goerli: process.env.ETHERSCAN_API_KEY!,
+      polygonMumbai: process.env.POLYGONSCAN_API_KEY!,
+      moonbaseAlpha: process.env.MOONSCAN_API_KEY!,
+    },
   },
 };
 

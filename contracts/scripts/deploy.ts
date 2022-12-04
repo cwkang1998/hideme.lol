@@ -14,3 +14,6 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+// 0xdBb40e382c826163fe7690973C990bFa4193900D
+// npx hardhat verify --network mumbai 0xdBb40e382c826163fe7690973C990bFa4193900D

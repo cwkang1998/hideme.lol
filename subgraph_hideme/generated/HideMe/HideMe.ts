@@ -27,6 +27,36 @@ export class CommittedFile__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
+  get fileType(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get hash(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get fileTypeString(): string {
+    return this._event.parameters[3].value.toString();
+  }
+}
+
+export class CommittedFileOld extends ethereum.Event {
+  get params(): CommittedFileOld__Params {
+    return new CommittedFileOld__Params(this);
+  }
+}
+
+export class CommittedFileOld__Params {
+  _event: CommittedFileOld;
+
+  constructor(event: CommittedFileOld) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
   get hash(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
@@ -133,6 +163,10 @@ export class SaveIpfsCid__Params {
 
   get cid(): string {
     return this._event.parameters[2].value.toString();
+  }
+
+  get fileTypeString(): string {
+    return this._event.parameters[3].value.toString();
   }
 }
 
@@ -331,6 +365,38 @@ export class HideMe extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
   }
+
+  userFileHashes(param0: Address, param1: Bytes): BigInt {
+    let result = super.call(
+      "userFileHashes",
+      "userFileHashes(address,bytes32):(uint256)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromFixedBytes(param1)
+      ]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_userFileHashes(
+    param0: Address,
+    param1: Bytes
+  ): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "userFileHashes",
+      "userFileHashes(address,bytes32):(uint256)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromFixedBytes(param1)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
 }
 
 export class ConstructorCall extends ethereum.Call {
@@ -380,8 +446,12 @@ export class CommitFileHashCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
+  get fileTypeString(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+
   get hash(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+    return this._call.inputValues[2].value.toBigInt();
   }
 }
 
@@ -389,6 +459,40 @@ export class CommitFileHashCall__Outputs {
   _call: CommitFileHashCall;
 
   constructor(call: CommitFileHashCall) {
+    this._call = call;
+  }
+}
+
+export class CommitFileHashOldCall extends ethereum.Call {
+  get inputs(): CommitFileHashOldCall__Inputs {
+    return new CommitFileHashOldCall__Inputs(this);
+  }
+
+  get outputs(): CommitFileHashOldCall__Outputs {
+    return new CommitFileHashOldCall__Outputs(this);
+  }
+}
+
+export class CommitFileHashOldCall__Inputs {
+  _call: CommitFileHashOldCall;
+
+  constructor(call: CommitFileHashOldCall) {
+    this._call = call;
+  }
+
+  get user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get hash(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class CommitFileHashOldCall__Outputs {
+  _call: CommitFileHashOldCall;
+
+  constructor(call: CommitFileHashOldCall) {
     this._call = call;
   }
 }
@@ -516,11 +620,11 @@ export class StoreUserCIDCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get fileType(): Bytes {
-    return this._call.inputValues[1].value.toBytes();
+  get cid(): string {
+    return this._call.inputValues[1].value.toString();
   }
 
-  get cid(): string {
+  get fileTypeString(): string {
     return this._call.inputValues[2].value.toString();
   }
 }

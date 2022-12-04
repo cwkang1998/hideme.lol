@@ -1,13 +1,179 @@
+:root {
+  --text-gray: #504f4f;
+  --action-purple: #e620ea;
+  --primaryDarkBlue: #020123;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Inconsolata", serif !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.bg-gradient {
+  background: rgb(2, 0, 22) !important;
+  background: linear-gradient(
+    39deg,
+    rgba(2, 0, 22, 1) 0%,
+    rgba(118, 0, 133, 1) 63%,
+    rgba(10, 0, 60, 1) 100%
+  ) !important;
+  height: 200%;
+}
+.navbar {
+  color: white;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+}
+.title {
+  font-size: 42px;
+  font-family: "Inconsolata", serif !important;
+  margin: 6px 0;
+  color: white;
+}
+.horizontalLine {
+  height: 3px;
+  background-color: white;
+  width: 100%;
+}
+.titleWrapper {
+  margin: 6px 0;
+  width: 100%;
+}
+.page-container {
+  max-width: 1200px;
+  padding: 16px;
+  width: 100%;
+}
+.page-container-outer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+.inputBox {
+  height: 50px !important;
+  background: white !important;
+  border-radius: 12px !important;
+  color: black;
+  padding: 8px 12px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin: 8px 0;
+}
+.inputTitle {
+  color: white;
+  font-size: 28px;
+  margin: 3px 0 8px;
+}
+.inputBoxCertTitle {
+  width: 550px;
+}
+.text {
+  font-family: "Inconsolata", serif !important;
+  font-size: 18px !important;
+  color: white !important;
+}
+.buttonBase {
+  background-color: var(--action-purple) !important;
+  color: black;
+  height: 31px !important;
+  font-size: 16px !important;
+}
+input[type="file"] {
+  background: #8876f9;
+}
+.heroSection {
+  background-color: var(--primaryDarkBlue);
+  color: white !important;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+.heroSectionInner {
+  max-width: 1200px;
+  width: 1200px;
+}
+.navLinks--active {
+  text-decoration: underline;
+}
+.navLinks {
+  padding-right: 30px;
+  color: white;
+  cursor: pointer;
+}
+.cardContainer {
+  background-color: var(--primaryDarkBlue) !important;
+  width: 100%;
+  padding: 30px 20px;
+  color: white !important;
+  margin: 8px 20px;
+}
+
+.cardContainer::before, .cardContainer::after {
+  border-width: 0;
+  border-style: none !important;
+}
+
+.proofCard {
+  background-color: var(--primaryDarkBlue) !important;
+  width: 100%;
+  padding: 30px 20px;
+  color: white !important;
+  margin: 18px 0;
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+}
+.proofCardTitle {
+  font-size: 32px;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+.proofCardHeading {
+  font-size: 16px;
+  font-weight: regular;
+  margin-bottom: 0px;
+}
+.proofCardData {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.proofCardDivider {
+  height: 2px;
+  background-color: white;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.proofCardRowData {
+  display: flex;
+  /* justify-content: space-between; */
+}
+.proofCardRowData_key {
+  font-weight: bold;
+  margin-right: 18px;
+}
+.proofEntitySection {
+  margin-top: 50px;
+}
+.proofCardDivider_small {
+  height: 1px;
+  background-color: white;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.buttonSpinner {
+  margin-right: 16px;
+}
+.loadingMessage {
+  color: white;
+  margin: 30px auto 10px;
 }

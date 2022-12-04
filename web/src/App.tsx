@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet";
 import { wrap } from "comlink";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
   darkTheme,
@@ -13,20 +12,47 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
-import { Dashboard } from "./views/Dashboard";
-import { NavBar } from "./components/NavBar";
-import { Layout } from "./components/Layout";
 import { ConnectBiconomyWallet } from "./components/ConnectBiconomyWallet";
+import { TabsView } from "./views/TabsView";
+
+const cronosTestnet = {
+  id: 338,
+  name: "Cronos Tesnet",
+  network: "Cronos",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Cronos Network ",
+    symbol: "CRO",
+  },
+  rpcUrls: {
+    default: "https://evm-t3.cronos.org	",
+  },
+  blockExplorers: {
+    default: { name: "SnowTrace", url: "https://snowtrace.io" },
+  },
+  testnet: false,
+};
+
+const moonbeanTestnet = {
+  id: 1287,
+  name: "Moonbean",
+  network: "MOON",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Moonbean Network ",
+    symbol: "MOON",
+  },
+  rpcUrls: {
+    default: "https://rpc.api.moonbase.moonbeam.network",
+  },
+  blockExplorers: {
+    default: { name: "SnowTrace", url: "https://snowtrace.io" },
+  },
+  testnet: false,
+};
 
 const { chains, provider } = configureChains(
-  [
-    chain.mainnet,
-    chain.goerli,
-    chain.polygon,
-    chain.polygonMumbai,
-    chain.optimism,
-    chain.arbitrum,
-  ],
+  [chain.polygonMumbai, cronosTestnet, moonbeanTestnet],
   [publicProvider()]
 );
 
@@ -56,20 +82,6 @@ const Disclaimer: DisclaimerComponent = ({
   </Text>
 );
 
-// Routing
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout/>,
-    children: [
-      {
-        path: "dashboard",
-        element: <Dashboard/>
-      }
-    ]
-  }
-]);
-
 const App = () => {
   // Memoize worker and workerApi to prevent unneccessary rerenders
   const worker = useMemo(() => {
@@ -98,7 +110,7 @@ const App = () => {
         <title>HIDEME.LOL</title>
       </Helmet>
       <ChakraProvider resetCSS theme={theme}>
-        <ConnectBiconomyWallet/>
+        <ConnectBiconomyWallet />
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider
             chains={chains}
@@ -110,7 +122,7 @@ const App = () => {
             }}
             coolMode
           >
-            <RouterProvider router={router} />
+            <TabsView wasmWorkerApi={workerApi} />
           </RainbowKitProvider>
         </WagmiConfig>
       </ChakraProvider>

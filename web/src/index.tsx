@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import "@biconomy/web3-auth/dist/src/style.css"
+import "@biconomy/web3-auth/dist/src/style.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Web3AuthProvider } from "./contexts/SocialLoginContext";

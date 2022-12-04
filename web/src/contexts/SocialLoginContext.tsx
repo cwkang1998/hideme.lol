@@ -63,14 +63,14 @@ export const Web3AuthProvider = ({ children }: any) => {
   useEffect(() => {
     console.log("hidelwallet");
     if (socialLoginSDK && socialLoginSDK.provider) {
-      console.log("Testing")
+      console.log("Testing");
       socialLoginSDK.hideWallet();
     }
   }, [address, socialLoginSDK]);
 
   const connect = useCallback(async () => {
     if (address) return;
-    
+
     if (socialLoginSDK?.provider) {
       setLoading(true);
       console.info("socialLoginSDK.provider", socialLoginSDK.provider);

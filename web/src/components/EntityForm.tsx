@@ -1,4 +1,4 @@
-import { Box, Button, HStack, useToast } from "@chakra-ui/react";
+import { Box, Button, HStack, useToast, Spinner } from "@chakra-ui/react";
 import { isAddress } from "ethers/lib/utils.js";
 import { useState } from "react";
 import { useAccount } from "wagmi";
@@ -64,7 +64,7 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
         );
 
         setLoadingMessage("Submitting commitment...");
-        console.log(commitment);
+        console.log("commitment", commitment);
 
         // upload to ipfs
         const ipfsCid = await submitFormToIpfs(
@@ -168,7 +168,7 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
   };
 
   return (
-    <Box style={{ marginTop: "60px" }}>
+    <Box style={{ marginTop: "60px" }} className="entityFormContainer">
       <div>
         <p className="inputTitle">Certificate Title</p>
         <input
@@ -176,6 +176,7 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
           className="inputBox inputBoxCertTitle"
           placeholder="A certificate title"
           value={certTitle}
+          disabled={isLoading === true}
           onChange={(e: any) => setCertTitle(e.target.value)}
         />
       </div>
@@ -186,6 +187,7 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
         <p className="inputTitle">Target User Address</p>
         <HStack justify="space-between">
           <input
+            disabled={isLoading === true}
             type="text"
             className="inputBox inputBoxCertTitle"
             placeholder="target address"
@@ -193,11 +195,13 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
             onChange={(e: any) => setTargetAddress(e.target.value)}
           />
         </HStack>
+        {isLoading && <div className="loadingMessage">{loadingMessage}</div>}
         <Button
           style={{ marginTop: "30px" }}
           className="buttonBase"
           onClick={onCreate}
         >
+          {isLoading && <Spinner className="buttonSpinner" size="sm" />}
           Create Certificate
         </Button>
       </div>

@@ -6,6 +6,7 @@ import {
   useMultiStyleConfig,
   useToast,
   VStack,
+  Button,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useAccount } from "wagmi";
@@ -179,6 +180,15 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
                   {
                     proofData.map(renderEntityProof)
                   }
+                  <Flex justify-content="end">
+                    <Button
+                      style={{ marginTop: "30px" }}
+                      className="buttonBase"
+                      onClick={onVerifyProof}
+                    >
+                      Verfiy
+                    </Button>
+                  </Flex>
                 </div>
               )
             }

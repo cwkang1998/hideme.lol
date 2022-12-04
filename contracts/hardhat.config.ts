@@ -22,9 +22,14 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     mumbai: {
-      url: process.env.MUMBAI_RPC_URL || "",
-      // url: "https://morning-necessary-mountain.matic-testnet.discover.quiknode.pro/a136a46616ee8a00ce92bcd5efdfa041bc0a0759/",
+      // url: process.env.MUMBAI_RPC_URL || "",
+      url: "https://morning-necessary-mountain.matic-testnet.discover.quiknode.pro/a136a46616ee8a00ce92bcd5efdfa041bc0a0759/",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
+    cronosTestnet: {
+      url: "https://evm-t3.cronos.org",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      // 0x9D1afC5B17c0785061EB1f25BAE3Aa302326c698
     },
     hardhat: {
       accounts: {

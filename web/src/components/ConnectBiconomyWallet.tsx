@@ -21,13 +21,12 @@ export const ConnectBiconomyWallet = () => {
   const buttonOnClick = !address
     ? connect
     : () => {
-        debugger;
         setSelectedAccount(null);
         disconnect();
       };
 
   return (
-    <Button onClick={buttonOnClick}>
+    <Button onClick={buttonOnClick} className="buttonBase">
       {!address ? "Connect Wallet" : "Disconnect Wallet"}
     </Button>
   );

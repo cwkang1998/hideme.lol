@@ -110,7 +110,6 @@ const App = () => {
         <title>HIDEME.LOL</title>
       </Helmet>
       <ChakraProvider resetCSS theme={theme}>
-        <ConnectBiconomyWallet />
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider
             chains={chains}

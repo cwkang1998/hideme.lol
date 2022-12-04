@@ -24,7 +24,7 @@ export const Hero = ({
             </Heading>
             <Box pr={8}>{children}</Box>
           </Box>
-          <Image src={imageUrl} />
+          <Image src={imageUrl} height={250} />
         </Flex>
       </div>
     </Box>

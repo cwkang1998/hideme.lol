@@ -50,7 +50,7 @@ code {
 }
 .page-container {
   max-width: 1200px;
-  padding: 100px 0;
+  padding: 16px;
   width: 100%;
 }
 .page-container-outer {
@@ -100,7 +100,7 @@ input[type="file"] {
 }
 .heroSectionInner {
   max-width: 1200px;
-  width: 100%;
+  width: 1200px;
 }
 .navLinks--active {
   text-decoration: underline;
@@ -117,6 +117,12 @@ input[type="file"] {
   color: white !important;
   margin: 8px 20px;
 }
+
+.cardContainer::before, .cardContainer::after {
+  border-width: 0;
+  border-style: none !important;
+}
+
 .proofCard {
   background-color: var(--primaryDarkBlue) !important;
   width: 100%;

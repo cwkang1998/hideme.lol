@@ -15,8 +15,6 @@ import { SectionTitle } from "../components/SectionTitle";
 import { HideMeProps, ProofData } from "../hideme-types";
 import { HideMe__factory } from "../typechain-types";
 
-
-
 export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
   const styles = useMultiStyleConfig("Button", { variant: "outline" });
   const toast = useToast();
@@ -80,7 +78,9 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
         )
       );
 
-      const isVerified = verificationResults.every((valArr) => valArr.every((val) => val));
+      const isVerified = verificationResults.every((valArr) =>
+        valArr.every((val) => val)
+      );
 
       setIsLoading(false);
       return toast({
@@ -107,11 +107,13 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
           <div className="proofCardRowData_key">{row.selectedKey}</div>
           <div className="proofCardRowData_value">{row.selectedValue}</div>
         </div>
-        <div className="proofCardRowData_proof">proof: {row.proof.join('').slice(0,15)}...</div>
+        <div className="proofCardRowData_proof">
+          proof: {row.proof.join("").slice(0, 15)}...
+        </div>
         <div className="proofCardDivider_small"></div>
       </div>
-    )
-  }
+    );
+  };
 
   const renderEntityProof = (proof: any) => {
     return (
@@ -127,13 +129,11 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
         <div className="proofCardData">{proof.address}</div>
         <div className="proofCardHeading">Selected Rows</div>
         <div className="proofCardDivider"></div>
-        {
-          proof.selectedRows.map(renderRow)
-        }
+        {proof.selectedRows.map(renderRow)}
       </div>
-    )
-  }
-  console.log('proofData: ', proofData);
+    );
+  };
+  console.log("proofData: ", proofData);
 
   return (
     <div style={{ width: "100%" }}>

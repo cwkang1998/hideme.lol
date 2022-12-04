@@ -71,7 +71,12 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
           submitRowTitles,
           submitRowValues
         );
-        await submitCommitmentAndIpfsCid(targetAddress, commitment, ipfsCid, certTitle);
+        await submitCommitmentAndIpfsCid(
+          targetAddress,
+          commitment,
+          ipfsCid,
+          certTitle
+        );
 
         setLoadingMessage("Exporting certificate...");
 
@@ -168,7 +173,7 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
   };
 
   return (
-    <Box style={{ marginTop: "60px" }} className="entityFormContainer">
+    <Box paddingTop="60px" paddingBottom={8}className="entityFormContainer">
       <div>
         <p className="inputTitle">Certificate Title</p>
         <input

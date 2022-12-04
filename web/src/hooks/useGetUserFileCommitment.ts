@@ -1,13 +1,11 @@
-import { gql, useQuery } from "@apollo/client";
-import { useEffect } from "react";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 
 import { useCustomApolloClient } from "./useCustomApolloClient";
 
 const GET_USER_FILE_COMMITMENT = gql`
-  query getUserFileCommitment($count: Int!, $user: Bytes!) {
+  query getUserFileCommitment($fileTypeList: [Bytes]!, $user: Bytes!) {
     committedFiles(
-      first: $count
-      where: { user: $user }
+      where: { fileType_in: $fileTypeList, user: $user }
       orderBy: blockTimestamp
       orderDirection: desc
     ) {
@@ -15,21 +13,36 @@ const GET_USER_FILE_COMMITMENT = gql`
       user
       fileType
       fileTypeString
-      cid
+      hash
       blockTimestamp
     }
   }
 `;
 
-export const useGetUserFileCommitment = (count: number, user: string) => {
+export const useGetUserFileCommitment = (
+  fileTypeList?: string[],
+  user?: string
+) => {
   const client = useCustomApolloClient("mumbai");
 
-  const { loading, error, data, startPolling, stopPolling } = useQuery(
-    GET_USER_FILE_COMMITMENT,
-    {
-      variables: { count, user },
-      client,
-    }
-  );
+  const { data, loading, error, startPolling, stopPolling } = useQuery<{
+    committedFiles: [
+      {
+        id: string;
+        user: string;
+        fileType: string;
+        fileTypeString: string;
+        hash: string;
+        cid: string;
+        blockTimestamp: string;
+      }
+    ];
+  }>(GET_USER_FILE_COMMITMENT, {
+    client,
+    variables: {
+      fileTypeList,
+      user,
+    },
+  });
   return { loading, error, data, startPolling, stopPolling };
 };

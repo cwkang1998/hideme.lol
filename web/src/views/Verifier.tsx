@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   Input,
   Text,
@@ -7,12 +8,13 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import { BigNumber } from "ethers";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import { Hero } from "../components/Hero";
 import { SectionTitle } from "../components/SectionTitle";
 import { HideMeProps, ProofData } from "../hideme-types";
-import { HideMe__factory } from "../typechain-types";
+import { useGetUserFileCommitment } from "../hooks/useGetUserFileCommitment";
 
 export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
   const styles = useMultiStyleConfig("Button", { variant: "outline" });
@@ -21,6 +23,10 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [proofData, setProofData] = useState<ProofData[]>([]);
+  const { data, loading, error } = useGetUserFileCommitment(
+    proofData.map((val) => val.certHash),
+    address
+  );
 
   const uploadFile = async function (e: any) {
     const reader = new FileReader();
@@ -45,37 +51,29 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
       });
     }
 
-    const contract = HideMe__factory.connect(
-      process.env.REACT_APP_PUBLIC_CONTRACT_ADDRESS!,
-      await connector.getSigner()
-    );
-
-    const ringBuffer = [0, 1, 2, 3, 4];
-
-    const nextIndex = await contract.ringBufferIndexes(address);
-
-    const currIndex = ringBuffer[nextIndex - 1] ?? 4;
-
-    const commitmentHash = await contract.fileHashRingBuffers(
-      address,
-      currIndex
-    );
-
+    // handle graphql loading state
     if (proofData && proofData.length > 0) {
       const verificationResults = await Promise.all(
-        proofData.map((p) =>
-          Promise.all(
+        proofData.map((p) => {
+          const commitmentHash = data?.committedFiles.find(
+            (commit) => commit.fileType === p.certHash
+          )?.hash;
+          return Promise.all(
             p.selectedRows.map((row) =>
               wasmWorkerApi.verifyProof(
                 row.proof,
                 row.selectedKey,
                 row.selectedValue,
-                commitmentHash.toHexString()
+                commitmentHash
+                  ? BigNumber.from(commitmentHash).toHexString()
+                  : ""
               )
             )
-          )
-        )
+          );
+        })
       );
+
+      console.log("verification?", verificationResults);
 
       const isVerified = verificationResults.every((valArr) =>
         valArr.every((val) => val)
@@ -172,12 +170,23 @@ export const Verifier = ({ wasmWorkerApi }: HideMeProps) => {
               </Box>
               <Box></Box>
             </VStack>
-            {proofData.length > 0 && (
-              <div className="proofCard">
-                <h2 className="proofCardTitle">Proof</h2>
-                {proofData.map(renderEntityProof)}
-              </div>
-            )}
+            <Flex w="full" direction="column">
+              {proofData.length > 0 && (
+                <div className="proofCard">
+                  <h2 className="proofCardTitle">Proof</h2>
+                  {proofData.map(renderEntityProof)}
+                </div>
+              )}
+              <Flex justifyContent="end" w="full">
+                <Button
+                  className="buttonBase"
+                  onClick={onVerifyProof}
+                  isLoading={isLoading}
+                >
+                  verify
+                </Button>
+              </Flex>
+            </Flex>
           </Flex>
         </div>
       </div>

@@ -27,30 +27,28 @@ export const CollapsibleCard = ({
     <Card className="cardContainer">
       <CardBody padding={0} paddingRight={3} paddingLeft={3}>
         <Accordion defaultIndex={[0]} allowMultiple>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Flex width={"100%"} justify={"space-between"}>
+          <AccordionItem borderStyle="none">
+            <AccordionButton>
+              <Flex width={"100%"} justify={"space-between"}>
+                <Box>
+                  <Heading size="md">{title}</Heading>
+                </Box>
+                <Flex>
                   <Box>
-                    <Heading size="md">{title}</Heading>
+                    <Heading size="sm">Certified By:</Heading>
+                    <Text>
+                      {address.slice(0, 4)}...$
+                      {address.slice(address.length - 4, address.length)}
+                    </Text>
                   </Box>
-                  <Flex>
-                    <Box>
-                      <Heading size="sm">Certified By:</Heading>
-                      <Text>
-                        {address.slice(0, 4)}...$
-                        {address.slice(address.length - 4, address.length)}
-                      </Text>
-                    </Box>
-                    <Box>
-                      <Heading size="sm">Created On:</Heading>
-                      <Text>{date.toLocaleDateString()}</Text>
-                    </Box>
-                  </Flex>
+                  <Box>
+                    <Heading size="sm">Created On:</Heading>
+                    <Text>{date.toLocaleDateString()}</Text>
+                  </Box>
                 </Flex>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
+              </Flex>
+              <AccordionIcon />
+            </AccordionButton>
             <AccordionPanel pb={4} w="full">
               {children}
             </AccordionPanel>

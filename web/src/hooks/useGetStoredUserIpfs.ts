@@ -41,13 +41,11 @@ export const useGetStoredUserIpfs = (
 ) => {
   const client = useCustomApolloClient(networkName);
 
-  const { loading, error, data, startPolling, stopPolling } = useQuery<SaveIpfsCidsResponse>(
-    GET_STORED_USER_IPFS,
-    {
+  const { loading, error, data, startPolling, stopPolling } =
+    useQuery<SaveIpfsCidsResponse>(GET_STORED_USER_IPFS, {
       variables: { count, user },
       client,
-    }
-  );
+    });
   return { loading, error, data, startPolling, stopPolling };
 };
 

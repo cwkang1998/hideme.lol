@@ -106,7 +106,7 @@ export const Dashboard = ({ wasmWorkerApi }: HideMeProps) => {
           const userFormDataDetails = userFormData.find(
             (userFormDataEle) => userFormDataEle.id === key
           );
-          
+
           const proofs = await Promise.all(
             selectedRows[key].map(async (rowEle) => {
               const proof = await generateProof(

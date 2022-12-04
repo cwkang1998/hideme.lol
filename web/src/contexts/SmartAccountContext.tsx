@@ -105,7 +105,6 @@ export const SmartAccountProvider = ({ children }: any) => {
       console.info("smartAccount", smartAccount);
 
       smartAccount.on("txHashGenerated", (response: any) => {
-        debugger;
         console.log(
           "txHashGenerated event received in AddLP via emitter",
           response

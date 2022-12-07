@@ -33,7 +33,7 @@ Protocols nowadays allow us to proof that data is correct by revealing nothing a
 
 ## **Video Demo** 📀
 
-[![Demo](./readme-assets/demo-yt.png)](https://www.youtube.com/)
+[![Demo](./readme-assets/demo-yt.png)](https://vimeo.com/manage/videos/777732273)
 ## **Technologies ( PoC )**
 
 ### ``HALO2 ( ZCASH )``
@@ -165,3 +165,17 @@ Finally, the selector index in also constraint to boolean values to ensure sound
 | 12         | 18.27            | 18.28 | 18.43 | 12  |
 | 13         | 30.08            | 30.19 | 29.95 | 13  |
 | 14         | 30.43            | 30.63 | 30.93 | 13  |
+
+
+# **Screenshots**
+
+![Entity Page](./readme-assets/entity-page.png "Entity Page")
+
+![Create Certificate](./readme-assets/create-certificate.png "Create Certificate")
+
+![User Certificate](./readme-assets/user-certificate.png "User Certificate")
+
+![User Dashboard](./readme-assets/user-dashboard.png "User Dashboard")
+
+![Verify Proof](./readme-assets/verify-proof.png "Verify Proof")
+

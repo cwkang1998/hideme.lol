@@ -1,3 +1,5 @@
+"use strict";
+
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
@@ -228,12 +230,6 @@ module.exports = function (webpackEnv) {
           ((info) =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, "/")),
     },
-    devServer: {
-      headers: {
-        "Cross-Origin-Embedder-Policy": "require-corp",
-        "Cross-Origin-Opener-Policy": "same-origin",
-      },
-    },
     cache: {
       type: "filesystem",
       version: createEnvironmentHash(env.raw),
@@ -297,7 +293,25 @@ module.exports = function (webpackEnv) {
         new CssMinimizerPlugin(),
       ],
     },
+    experiments: {
+      asyncWebAssembly: true,
+    },
     resolve: {
+      fallback: {
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: require.resolve("crypto-browserify"),
+        stream: require.resolve("stream-browserify"),
+        url: require.resolve("url"),
+        zlib: require.resolve("browserify-zlib"),
+        http: require.resolve("stream-http"),
+        https: require.resolve("https-browserify"),
+        assert: require.resolve("assert"),
+        os: require.resolve("os-browserify"),
+        path: require.resolve("path-browserify"),
+        "process/browser": require.resolve("process/browser"),
+      },
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -752,6 +766,10 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      new webpack.ProvidePlugin({
+        process: "process/browser",
+        Buffer: ["buffer", "Buffer"],
+      }),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter

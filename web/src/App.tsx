@@ -12,8 +12,8 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { theme } from "./styles";
+import { ConnectBiconomyWallet } from "./components/ConnectBiconomyWallet";
 import { TabsView } from "./views/TabsView";
-import { Test } from "./components/Test";
 
 const cronosTestnet = {
   id: 338,
@@ -106,7 +106,6 @@ const App = () => {
 
   return (
     <>
-      <Test />
       <Helmet>
         <title>HIDEME.LOL</title>
       </Helmet>

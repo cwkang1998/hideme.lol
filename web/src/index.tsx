@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "@biconomy/web3-auth/dist/src/style.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { Web3AuthProvider } from "./contexts/SocialLoginContext";
+import { SmartAccountProvider } from "./contexts/SmartAccountContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -10,7 +13,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+    <Web3AuthProvider>
+      <SmartAccountProvider>
+        <App />
+      </SmartAccountProvider>
+    </Web3AuthProvider>
   </React.StrictMode>
 );
 

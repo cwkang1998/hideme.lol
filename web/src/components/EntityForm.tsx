@@ -173,7 +173,7 @@ export const EntityForm = ({ wasmWorkerApi }: HideMeProps) => {
   };
 
   return (
-    <Box paddingTop="60px" paddingBottom={8}className="entityFormContainer">
+    <Box paddingTop="60px" paddingBottom={8} className="entityFormContainer">
       <div>
         <p className="inputTitle">Certificate Title</p>
         <input

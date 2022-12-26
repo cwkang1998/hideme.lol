@@ -118,7 +118,8 @@ input[type="file"] {
   margin: 8px 20px;
 }
 
-.cardContainer::before, .cardContainer::after {
+.cardContainer::before,
+.cardContainer::after {
   border-width: 0;
   border-style: none !important;
 }

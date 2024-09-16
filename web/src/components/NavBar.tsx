@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { PropsWithChildren, ReactNode } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ConnectBiconomyWallet } from "./ConnectBiconomyWallet";
 
 const Links = [
   { title: "Entity", href: "entity" },
@@ -72,7 +73,7 @@ export const NavBar = ({ children, page, setPage }: NavBarType) => {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <ConnectButton />
+            <ConnectBiconomyWallet />
           </Flex>
         </Flex>
       </Box>
